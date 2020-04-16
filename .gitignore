@@ -14,3 +14,5 @@
 /transient/
 /url/
 /.cache/
+/.python-environments/
+/elpy/

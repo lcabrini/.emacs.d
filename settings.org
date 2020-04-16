@@ -189,17 +189,18 @@ I will do this when I get comfortable enough with Emacs keybindings
 - [ ] yapf
 ** Web-mode
 #+begin_src emacs-lisp
-  (use-package web-mode
-    :ensure t
-    :mode (".html?$")
-    :config
-    (setq
-     web-mode-markup-indent-offset 2
-     web-mode-css-indent-offset 2
-     web-mode-code-indent-offset 2
-     web-mode-enable-auto-closing t
-     web-mode-enable-auto-opening t
-     web-mode-enable-auto-indentation t))
+    (use-package web-mode
+      :ensure t
+      :mode (".html?$")
+      :config
+      (setq
+       web-mode-enable-engine-detection t
+       web-mode-markup-indent-offset 2
+       web-mode-css-indent-offset 2
+       web-mode-code-indent-offset 2
+       web-mode-enable-auto-closing t
+       web-mode-enable-auto-opening t
+       web-mode-enable-auto-indentation t))
 #+end_src
 * Magit
 #+begin_src emacs-lisp
@@ -216,7 +217,7 @@ I will do this when I get comfortable enough with Emacs keybindings
     (projectile-mode +1)
     (setq projectile-project-search-path '("~/src"
                                            "~/.emacs.d/"
-                                           "~/org"))
+                                           "~/org")))
 #+end_src
 * Treemacs
 #+begin_src emacs-lisp
