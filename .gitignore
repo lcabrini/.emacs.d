@@ -1,0 +1,15 @@
+/.cask/
+/.org-id-locations
+/auto-save-list/
+/elpa/
+/emms/
+/eshell/
+*~
+/persist/
+/projectile-bookmarks.eld
+/quelpa/
+/recentf
+/settings.el
+/tramp
+/transient/
+/url/
