@@ -359,6 +359,10 @@ Requires some out-of-emacs setup. I used =yay -S emacs-eaf=.
     (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
     (eaf-bind-key take_photo "p" eaf-camera-keybinding))
 #+end_src
+* Open index.org
+#+begin_src emacs-lisp
+(setq initial-buffer-choice "~/org/index.org")
+#+end_src
 * TODO configuration [4/5]                                        :@computer:
 - [X] set up fonts [3/3]
   - [X] Korean
