@@ -213,7 +213,10 @@ I will do this when I get comfortable enough with Emacs keybindings
     :config
     (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-    (projectile-mode +1))
+    (projectile-mode +1)
+    (setq projectile-project-search-path '("~/src"
+                                           "~/.emacs.d/"
+                                           "~/org"))
 #+end_src
 * Treemacs
 #+begin_src emacs-lisp
@@ -307,7 +310,7 @@ I will do this when I get comfortable enough with Emacs keybindings
     :ensure t
     :config
     (progn
-      (emms-standard)
+      (emms-all)
       (emms-default-players)
       (setq emms-playlist-buffer-name "EMMS")
       (setq emms-source-file-default-directory "~/musica/")))
