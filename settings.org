@@ -154,54 +154,6 @@ I will do this when I get comfortable enough with Emacs keybindings
     (yas-global-mode 1))
   (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 #+END_SRC
-* Programming
-** Python
-#+BEGIN_SRC emacs-lisp
-  (use-package python
-    :ensure nil
-    :hook
-    ((python-mode . jedi:setup)))
-
-  (use-package pyvenv
-    :ensure t
-    :config
-    (pyvenv-mode 1))
-
-  (use-package company-jedi
-    :ensure t
-    :config
-    (add-to-list 'company-backends 'company-jedi))
-
-  (use-package elpy
-    :ensure t
-    :init
-    (elpy-enable))
-
-  (when (executable-find "ipython")
-    (setq python-shell-interpreter "ipython"
-          python-shell-interpreter-args "--simple-prompt -i"))
-#+END_SRC
-
-*** TODO automaticall install required packages in virtual environment [0/4]
-- [ ] flake8
-- [ ] autopep8
-- [ ] jedi (is this needed?)
-- [ ] yapf
-** Web-mode
-#+begin_src emacs-lisp
-    (use-package web-mode
-      :ensure t
-      :mode (".html?$")
-      :config
-      (setq
-       web-mode-enable-engine-detection t
-       web-mode-markup-indent-offset 2
-       web-mode-css-indent-offset 2
-       web-mode-code-indent-offset 2
-       web-mode-enable-auto-closing t
-       web-mode-enable-auto-opening t
-       web-mode-enable-auto-indentation t))
-#+end_src
 * Magit
 #+begin_src emacs-lisp
   (use-package magit
@@ -304,6 +256,61 @@ I will do this when I get comfortable enough with Emacs keybindings
   (use-package treemacs-magit
     :after treemacs magit
     :ensure t)
+#+end_src
+* Programming
+** Python
+#+BEGIN_SRC emacs-lisp
+  (use-package python
+    :ensure nil
+    :hook
+    ((python-mode . jedi:setup)))
+
+  (use-package pyvenv
+    :ensure t
+    :config
+    (pyvenv-mode 1))
+
+  (use-package company-jedi
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-jedi))
+
+  (use-package elpy
+    :ensure t
+    :init
+    (elpy-enable))
+
+  (when (executable-find "ipython")
+    (setq python-shell-interpreter "ipython"
+          python-shell-interpreter-args "--simple-prompt -i"))
+#+END_SRC
+
+*** TODO automaticall install required packages in virtual environment [0/4]
+- [ ] flake8
+- [ ] autopep8
+- [ ] jedi (is this needed?)
+- [ ] yapf
+** Web-mode
+#+begin_src emacs-lisp
+  (use-package web-mode
+    :ensure t
+    :mode (".html?$")
+    :config
+    (setq
+     web-mode-enable-engine-detection t
+     web-mode-markup-indent-offset 2
+     web-mode-css-indent-offset 2
+     web-mode-code-indent-offset 2
+     web-mode-enable-auto-closing t
+     web-mode-enable-auto-opening t
+     web-mode-enable-auto-indentation t))
+
+  ;; https://emacs.stackexchange.com/questions/32585/set-web-mode-engine-per-directory
+  (defun lorenzo/django-engine ()
+    (if (projectile-project-p)
+        (if (file-exists-p (concat (projectile-project-root) "manage.py"))
+            (web-mode-set-engine "django"))))
+  (add-hook 'web-mode-hook 'lorenzo/django-engine)
 #+end_src
 * EMMS
 #+BEGIN_SRC emacs-lisp
