@@ -176,6 +176,10 @@ I will do this when I get comfortable enough with Emacs keybindings
     :ensure t
     :init
     (elpy-enable))
+
+  (when (executable-find "ipython")
+    (setq python-shell-interpreter "ipython"
+          python-shell-interpreter-args "--simple-prompt -i"))
 #+END_SRC
 
 *** TODO automaticall install required packages in virtual environment [0/4]
