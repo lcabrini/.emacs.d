@@ -5,23 +5,27 @@
 
 * User interface
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  (blink-cursor-mode 0)
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  ;;(load-theme 'wheatgrass t)
-  ;;(use-package zenburn-theme
-  ;;  :ensure t
-  ;;  :init
-  ;;  (load-theme 'zenburn t))
-  (use-package color-theme-sanityinc-tomorrow
-    :ensure t
-    :init
-    (load-theme 'sanityinc-tomorrow-blue t))
-  (set-language-environment "UTF-8")
-  (global-hl-line-mode t)
-  (global-prettify-symbols-mode t) 
+    (add-to-list 'default-frame-alist '(fullscreen . maximized))
+    (blink-cursor-mode 0)
+    (menu-bar-mode -1)
+    (tool-bar-mode -1)
+    (scroll-bar-mode -1)
+    ;;(load-theme 'wheatgrass t)
+    ;;(use-package zenburn-theme
+    ;;  :ensure t
+    ;;  :init
+    ;;  (load-theme 'zenburn t))
+    (use-package color-theme-sanityinc-tomorrow
+      :ensure t
+      :init
+      (load-theme 'sanityinc-tomorrow-blue t))
+    (set-language-environment "UTF-8")
+    (global-hl-line-mode t)
+    (global-prettify-symbols-mode t)
+
+  (setq display-time-default-load-average nil)
+  (setq display-time-24hr-format t)
+  (display-time-mode t)
 #+END_SRC
 ** DONE disable the menu bar
 CLOSED: [2020-04-07 mar 22:15]
