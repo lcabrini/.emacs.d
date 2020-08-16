@@ -16,3 +16,5 @@
 /.cache/
 /.python-environments/
 /elpy/
+/games/
+/projectile.cache

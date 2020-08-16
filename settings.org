@@ -145,10 +145,13 @@ I will do this when I get comfortable enough with Emacs keybindings
 #+END_SRC
 * Company
 #+BEGIN_SRC emacs-lisp
-  (use-package company
-    :ensure t
-    :init
-    (global-company-mode))
+  ; (use-package company
+  ;  :ensure t
+  ;  :init
+  ;  (global-company-mode))
+  ;
+  ; (use-package company-go
+  ;  :ensure t)
 #+END_SRC
 * Yasnippet
 #+BEGIN_SRC emacs-lisp
@@ -262,27 +265,34 @@ I will do this when I get comfortable enough with Emacs keybindings
     :ensure t)
 #+end_src
 * Programming
+** Go
+#+BEGIN_SRC emacs-lisp
+  (use-package go-mode
+    :ensure t
+    :config
+    (add-hook 'before-save-hook 'gofmt-before-save))
+#+END_SRC
 ** Python
 #+BEGIN_SRC emacs-lisp
   (use-package python
-    :ensure nil
-    :hook
-    ((python-mode . jedi:setup)))
+    :ensure nil)
+    ; :hook
+    ; ((python-mode . jedi:setup)))
 
   (use-package pyvenv
     :ensure t
     :config
     (pyvenv-mode 1))
 
-  (use-package company-jedi
-    :ensure t
-    :config
-    (add-to-list 'company-backends 'company-jedi))
+  ; (use-package company-jedi
+  ;  :ensure t
+  ;  :config
+  ;  (add-to-list 'company-backends 'company-jedi))
 
-  (use-package elpy
-    :ensure t
-    :init
-    (elpy-enable))
+  ; (use-package elpy
+  ;  :ensure t
+  ;  :init
+  ;  (elpy-enable))
 
   (when (executable-find "ipython")
     (setq python-shell-interpreter "ipython"
@@ -316,6 +326,13 @@ I will do this when I get comfortable enough with Emacs keybindings
             (web-mode-set-engine "django"))))
   (add-hook 'web-mode-hook 'lorenzo/django-engine)
 #+end_src
+* Docker
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode
+    :ensure t
+    :init
+    (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+#+END_SRC 
 * EMMS
 #+BEGIN_SRC emacs-lisp
   (use-package emms
