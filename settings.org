@@ -3,6 +3,22 @@
 #+LANGUAGE: en
 #+FILETAGS: :emacs:config:
 
+* EXWM
+#+begin_src emacs-lisp
+  (use-package exwm
+    :ensure t
+    :config
+
+    (require 'exwm-config)
+    (server-start)
+
+    (exwm-input-set-key (kbd "s-&")
+                        (lambda (command)
+                          (interactive (list (read-shell-command "$ ")))
+                          (start-process-shell-command command nil command)))
+
+    (exwm-enable))
+#+end_src
 * User interface
 #+BEGIN_SRC emacs-lisp
     (add-to-list 'default-frame-alist '(fullscreen . maximized))
