@@ -12,6 +12,12 @@
     (require 'exwm-config)
     (server-start)
 
+    (dotimes (i 10)
+      (exwm-input-set-key (kbd (format "s-%d" i))
+                          `(lambda ()
+                             (interactive)
+                             (exwm-workspace-switch-create ,i))))
+
     (exwm-input-set-key (kbd "s-&")
                         (lambda (command)
                           (interactive (list (read-shell-command "$ ")))
