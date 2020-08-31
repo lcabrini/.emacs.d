@@ -4,26 +4,34 @@
 #+FILETAGS: :emacs:config:
 
 * EXWM
+EXWM allows Emacs to be your window manager. In theory this is great, since
+you are already familiar with the keybindings. In practice I found it to be
+a bit quirky, so I'm no longer using it. I'll keep the configuration for the
+time being in case I decide to give it another try.
+
 #+begin_src emacs-lisp
-  (use-package exwm
-    :ensure t
-    :config
+  ;(use-package exwm
+  ;  :ensure t
+  ;  :config
 
-    (require 'exwm-config)
-    (server-start)
+  ;  (require 'exwm-config)
+  ;  (server-start)
 
-    (dotimes (i 10)
-      (exwm-input-set-key (kbd (format "s-%d" i))
-                          `(lambda ()
-                             (interactive)
-                             (exwm-workspace-switch-create ,i))))
+  ;  (dotimes (i 10)
+  ;    (exwm-input-set-key (kbd (format "s-%d" i))
+  ;                        `(lambda ()
+  ;                           (interactive)
+  ;                           (exwm-workspace-switch-create ,i))))
 
-    (exwm-input-set-key (kbd "s-&")
-                        (lambda (command)
-                          (interactive (list (read-shell-command "$ ")))
-                          (start-process-shell-command command nil command)))
+  ;  (exwm-input-set-key (kbd "s-&")
+  ;                      (lambda (command)
+  ;                        (interactive (list (read-shell-command "$ ")))
+  ;                        (start-process-shell-command command nil command)))
 
-    (exwm-enable))
+  ;  ediff workaround in EXWM
+  ;  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+  ;  (exwm-enable))
 #+end_src
 * User interface
 #+BEGIN_SRC emacs-lisp
