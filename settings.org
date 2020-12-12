@@ -166,6 +166,13 @@ I will do this when I get comfortable enough with Emacs keybindings
   (setq org-drill-maximum-items-per-session 50)
   (setq org-drill-maximum-duration 30)
 #+END_SRC
+* Babel
+#+begin_src lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((ledger . t)))
+
+#+end_src
 * Which key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
