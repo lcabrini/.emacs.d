@@ -14,7 +14,7 @@ right location.
 ** Personal Information
 #+begin_src emacs-lisp
   (setq user-full-name "Lorenzo Cabrini"
-        user-email-address "lorenzo.cabrini@gmail.com"
+        user-email-address "lorenzo.cabrini@gmail.com")
 #+end_src
 
 ** Startup
@@ -101,7 +101,15 @@ Key mappings related to org-capture.
   (define-key global-map (kbd "C-c i") 'org-capture-inbox)
 #+end_src
 
+* Terminal Emulation
+** Vterm
+Normally I use ansi-term, but I decided to give vterm a go.
 
+#+begin_src emacs-lisp
+  (use-package vterm
+    :ensure t)
+  (global-set-key (kbd "<s-return>") 'vterm)
+#+end_src
 * TODO CLEAN UP
 
 ** User interface
