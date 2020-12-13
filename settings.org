@@ -3,55 +3,119 @@
 #+LANGUAGE: en
 #+FILETAGS: :emacs:config:
 
-* EXWM
-EXWM allows Emacs to be your window manager. In theory this is great, since
-you are already familiar with the keybindings. In practice I found it to be
-a bit quirky, so I'm no longer using it. I'll keep the configuration for the
-time being in case I decide to give it another try.
+This is my personal Emacs configuration. As most Emacs users, I maintain this as
+an org-mode file.
+
+It is currently in a bit of a mess, but I'm working on cleaning it up. The section
+called =CLEAN UP= contains all the stuff that needs to be reviewed and put in the
+right location.
+
+* Basics
+** Personal Information
+#+begin_src emacs-lisp
+  (setq user-full-name "Lorenzo Cabrini"
+        user-email-address "lorenzo.cabrini@gmail.com"
+#+end_src
+
+** Startup
+Load up my index file on startup.
 
 #+begin_src emacs-lisp
-  ;(use-package exwm
-  ;  :ensure t
-  ;  :config
-
-  ;  (require 'exwm-config)
-  ;  (server-start)
-
-  ;  (dotimes (i 10)
-  ;    (exwm-input-set-key (kbd (format "s-%d" i))
-  ;                        `(lambda ()
-  ;                           (interactive)
-  ;                           (exwm-workspace-switch-create ,i))))
-
-  ;  (exwm-input-set-key (kbd "s-&")
-  ;                      (lambda (command)
-  ;                        (interactive (list (read-shell-command "$ ")))
-  ;                        (start-process-shell-command command nil command)))
-
-  ;  ediff workaround in EXWM
-  ;  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-
-  ;  (exwm-enable))
+(setq initial-buffer-choice "~/org/index.org")
 #+end_src
-* User interface
+
+* User Interface
+My user interface setup.
+
+#+begin_src emacs-lisp
+  (blink-cursor-mode 0)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-hl-line-mode t)
+#+end_src
+
+** Theme
+I normally prefer a blue theme, since it reminds me of the Amiga. However, I
+also like to switch themes from time to time. 
+
+*** Sanityinc Tomorrow Blue
+This is my favorite theme and the one I use most of the time. ([[https://github.com/purcell/color-theme-sanityinc-tomorrow][GitHub]])
+
+#+begin_src emacs-lisp
+  ;; (use-package color-theme-sanityinc-tomorrow
+  ;;  :ensure t
+  ;;  :init
+  ;;  (load-theme 'sanityinc-tomorrow-blue t))
+#+end_src
+
+*** Zenburn
+This is not a bad theme. ([[https://github.com/bbatsov/zenburn-emacs][GitHub]])
+
+#+begin_src emacs-lisp
+  (use-package zenburn-theme
+    :ensure t
+    :init
+    (load-theme 'zenburn t))
+#+end_src
+** Fonts
+* Org Mode
+I use Org mode for almost everything.
+
+#+begin_src emacs-lisp
+  (setq org-startup-indented t)
+#+end_src
+
+** Org Agenda
+I use org-agenda to quickly see what I need to be working on. I want org-agenda
+to look for tasks in my inbox and my projects file.
+
+#+begin_src emacs-lisp
+  (setq org-agenda-files '("~/org/gtd/inbox.org"
+                           "~/org/gtd/projects.org"))
+#+end_src
+
+** Org Capture
+I have a template that allows me to quickly capture tasks to my GTD inbox.
+
+#+begin_src emacs-lisp
+  (setq org-capture-templates '(("t" "Todo [inbox]" entry
+                                 (file+headline "~/org/gtd/inbox.org" "Tasks")
+                                 "* TODO %i%?")))
+#+end_src
+
+Since I capture to the inbox frequently, it makes sense to have a function for
+this that I can map to a key chord. (I got this from [[https://www.labri.fr/perso/nrougier/GTD/index.html][here]].)
+
+#+begin_src emacs-lisp
+  (defun org-capture-inbox ()
+    (interactive)
+    (call-interactively 'org-store-link)
+    (org-capture nil "t"))
+#+end_src
+
+Key mappings related to org-capture.
+
+#+begin_src emacs-lisp
+  (define-key global-map (kbd "C-c c") 'org-capture)
+  (define-key global-map (kbd "C-c i") 'org-capture-inbox)
+#+end_src
+
+
+* TODO CLEAN UP
+
+** User interface
 #+BEGIN_SRC emacs-lisp
-    (add-to-list 'default-frame-alist '(fullscreen . maximized))
-    (blink-cursor-mode 0)
-    (menu-bar-mode -1)
-    (tool-bar-mode -1)
-    (scroll-bar-mode -1)
+    
     ;;(load-theme 'wheatgrass t)
     ;;(use-package zenburn-theme
     ;;  :ensure t
     ;;  :init
     ;;  (load-theme 'zenburn t))
-    (use-package color-theme-sanityinc-tomorrow
-      :ensure t
-      :init
-      (load-theme 'sanityinc-tomorrow-blue t))
+
     (set-language-environment "UTF-8")
-    (global-hl-line-mode t)
-    (global-prettify-symbols-mode t)
+    ;(global-hl-line-mode t)
+    ;(global-prettify-symbols-mode t)
 
   (setq display-time-default-load-average nil)
   (setq display-time-24hr-format t)
@@ -61,7 +125,7 @@ time being in case I decide to give it another try.
 CLOSED: [2020-04-07 mar 22:15]
 I will do this when I get comfortable enough with Emacs keybindings
 
-* Fonts
+** Fonts
 #+BEGIN_SRC emacs-lisp
   (set-face-attribute 'default nil :font "DejaVu Sans Mono")
   (set-fontset-font t 'latin "Noto Sans")
@@ -72,7 +136,7 @@ I will do this when I get comfortable enough with Emacs keybindings
   (set-fontset-font t 'hangul
                     (font-spec :family "Noto Sans CJK KR"))
 #+END_SRC
-* Buffers and windows
+** Buffers and windows
 #+BEGIN_SRC emacs-lisp
   (use-package ace-window
     :ensure t
@@ -83,7 +147,7 @@ I will do this when I get comfortable enough with Emacs keybindings
        '(aw-leading-char-face
          ((t (:inherit ace-jump-face-foreground :height 3.0)))))))
 #+END_SRC
-* Ansi term
+** Ansi term
 #+begin_src emacs-lisp
   (defvar my-term-shell "/bin/bash")
   (defadvice ansi-term (before force-bash)
@@ -91,7 +155,7 @@ I will do this when I get comfortable enough with Emacs keybindings
   (ad-activate 'ansi-term)
   (global-set-key (kbd "<s-return>") 'ansi-term)
 #+end_src
-* Swiper
+** Swiper
 #+BEGIN_SRC emacs-lisp
   (use-package counsel
     :ensure t)
@@ -123,13 +187,13 @@ I will do this when I get comfortable enough with Emacs keybindings
       (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
       (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)))
 #+END_SRC
-* Key bindings
+** Key bindings
 #+BEGIN_SRC emacs-lisp
 (global-set-key [C-mouse-4] 'text-scale-increase)
 (global-set-key [C-mouse-5] 'text-scale-decrease)
 #+END_SRC
 
-* Powerline
+** Powerline
 #+BEGIN_SRC emacs-lisp
     (use-package powerline
       :ensure t)
@@ -138,12 +202,12 @@ I will do this when I get comfortable enough with Emacs keybindings
 
 ** TODO show the (date and) time
 
-* Org
+** Org
 #+BEGIN_SRC emacs-lisp
-  (setq org-startup-indented t)
-  (setq org-agenda-files '("~/org"
-                           "~/org/lang"
-                           "~/.emacs.d/settings.org"))
+  
+  ;(setq org-agenda-files '("~/org"
+  ;                         "~/org/lang"
+  ;                         "~/.emacs.d/settings.org"))
   (setq org-log-done 'time)
   (setq org-todo-keywords
         '((sequence "TODO(t)"
@@ -166,14 +230,14 @@ I will do this when I get comfortable enough with Emacs keybindings
   (setq org-drill-maximum-items-per-session 50)
   (setq org-drill-maximum-duration 30)
 #+END_SRC
-* Babel
+** Babel
 #+begin_src lisp
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((ledger . t)))
 
 #+end_src
-* Ledger
+** Ledger
 #+begin_src lisp
   (use-package ledger-mode
     :ensure t
@@ -181,14 +245,14 @@ I will do this when I get comfortable enough with Emacs keybindings
     (setq ledger-clear-whole-transactions 1)
     :mode "\\.ledger\\'")
 #+end_src
-* Which key
+** Which key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
     :ensure t
     :config
     (which-key-mode))
 #+END_SRC
-* Company
+** Company
 #+BEGIN_SRC emacs-lisp
   ; (use-package company
   ;  :ensure t
@@ -198,7 +262,7 @@ I will do this when I get comfortable enough with Emacs keybindings
   ; (use-package company-go
   ;  :ensure t)
 #+END_SRC
-* Yasnippet
+** Yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
     :ensure t
@@ -206,12 +270,12 @@ I will do this when I get comfortable enough with Emacs keybindings
     (yas-global-mode 1))
   (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 #+END_SRC
-* Magit
+** Magit
 #+begin_src emacs-lisp
   (use-package magit
     :ensure t)
 #+end_src
-* Projectile
+** Projectile
 #+begin_src emacs-lisp
   (use-package projectile
     :ensure t
@@ -220,7 +284,7 @@ I will do this when I get comfortable enough with Emacs keybindings
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (projectile-mode +1))
 #+end_src
-* Treemacs
+** Treemacs
 #+begin_src emacs-lisp
   ;; copied from treemacs documentation. I should find time and go through this at
   ;; some point
@@ -307,15 +371,15 @@ I will do this when I get comfortable enough with Emacs keybindings
     :ensure t)
 #+end_src
 
-* Programming
-** Go
+** Programming
+*** Go
 #+BEGIN_SRC emacs-lisp
   (use-package go-mode
     :ensure t
     :config
     (add-hook 'before-save-hook 'gofmt-before-save))
 #+END_SRC
-** Python
+*** Python
 #+BEGIN_SRC emacs-lisp
   (use-package python
     :ensure nil)
@@ -347,7 +411,7 @@ I will do this when I get comfortable enough with Emacs keybindings
 - [ ] autopep8
 - [ ] jedi (is this needed?)
 - [ ] yapf
-** Web-mode
+*** Web-mode
 #+begin_src emacs-lisp
   (use-package web-mode
     :ensure t
@@ -369,14 +433,14 @@ I will do this when I get comfortable enough with Emacs keybindings
             (web-mode-set-engine "django"))))
   (add-hook 'web-mode-hook 'lorenzo/django-engine)
 #+end_src
-* Docker
+** Docker
 #+BEGIN_SRC emacs-lisp
   (use-package dockerfile-mode
     :ensure t
     :init
     (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 #+END_SRC 
-* EMMS
+** EMMS
 #+BEGIN_SRC emacs-lisp
   (use-package emms
     :ensure t
@@ -390,7 +454,7 @@ I will do this when I get comfortable enough with Emacs keybindings
   (use-package org-emms
     :ensure t)
 #+END_SRC
-* Elfeed
+** Elfeed
 #+BEGIN_SRC emacs-lisp
   (use-package elfeed
     :ensure t)
@@ -402,7 +466,7 @@ I will do this when I get comfortable enough with Emacs keybindings
     (elfeed-org))
   (setq rmh-elfeed-org-files (list "~/org/feeds.org"))
 #+END_SRC
-* Matrix-client
+** Matrix-client
 #+begin_src emacs-lisp
   (use-package matrix-client
     :quelpa (matrix-client
@@ -410,7 +474,7 @@ I will do this when I get comfortable enough with Emacs keybindings
              :repo "alphapapa/matrix-client.el"
              :files (:defaults "logo.png" "matrix-client-standalone.el.sh")))
 #+end_src
-* PDF Tools
+** PDF Tools
 #+begin_src emacs-lisp
   (use-package pdf-tools
     :ensure t
@@ -421,12 +485,12 @@ I will do this when I get comfortable enough with Emacs keybindings
   (use-package org-pdfview
     :ensure t)
 #+end_src
-* Pass
+** Pass
 #+begin_src emacs-lisp
   (use-package pass
     :ensure t)
 #+end_src
-* Emacs Application Framework
+** Emacs Application Framework
 Requires some out-of-emacs setup. I used =yay -S emacs-eaf=.
 #+begin_src emacs-lisp
   (use-package eaf
@@ -438,11 +502,11 @@ Requires some out-of-emacs setup. I used =yay -S emacs-eaf=.
     (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
     (eaf-bind-key take_photo "p" eaf-camera-keybinding))
 #+end_src
-* Open index.org
+** Open index.org
 #+begin_src emacs-lisp
-(setq initial-buffer-choice "~/org/index.org")
+;(setq initial-buffer-choice "~/org/index.org")
 #+end_src
-* TODO configuration [4/5]                                        :@computer:
+** TODO configuration [4/5]                                      :@computer:
 - [X] set up fonts [3/3]
   - [X] Korean
   - [X] Japanese
