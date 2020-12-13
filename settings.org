@@ -173,6 +173,14 @@ I will do this when I get comfortable enough with Emacs keybindings
    '((ledger . t)))
 
 #+end_src
+* Ledger
+#+begin_src lisp
+  (use-package ledger-mode
+    :ensure t
+    :init
+    (setq ledger-clear-whole-transactions 1)
+    :mode "\\.ledger\\'")
+#+end_src
 * Which key
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
