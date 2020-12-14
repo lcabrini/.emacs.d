@@ -3,12 +3,12 @@
 #+LANGUAGE: en
 #+FILETAGS: :emacs:config:
 
-This is my personal Emacs configuration. As most Emacs users, I maintain this as
-an org-mode file.
+This is my personal Emacs configuration. As most Emacs users, I maintain this 
+asan org-mode file.
 
-It is currently in a bit of a mess, but I'm working on cleaning it up. The section
-called =CLEAN UP= contains all the stuff that needs to be reviewed and put in the
-right location.
+It is currently in a bit of a mess, but I'm working on cleaning it up. The 
+section called =CLEAN UP= contains all the stuff that needs to be reviewed and 
+put in the right location.
 
 * Basics
 ** Personal Information
@@ -64,18 +64,21 @@ I use Org mode for almost everything.
 
 #+begin_src emacs-lisp
   (setq org-startup-indented t)
+  (setq org-log-done 'time)
 #+end_src
 
-** Org Agenda
-I use org-agenda to quickly see what I need to be working on. I want org-agenda
-to look for tasks in my inbox and my projects file.
+** Todo
+I used to have a =STARTED= keyword in the list, but I never really used it.
 
 #+begin_src emacs-lisp
-  (setq org-agenda-files '("~/org/gtd/inbox.org"
-                           "~/org/gtd/projects.org"))
+  (setq org-todo-keywords
+          '((sequence "TODO(t)"
+                      "WAITING(w)"
+                      "|"
+                      "DONE(d)"
+                      "CANCELLED(c)")))
 #+end_src
-
-** Org Capture
+** Capture
 I have a template that allows me to quickly capture tasks to my GTD inbox.
 
 #+begin_src emacs-lisp
@@ -101,15 +104,35 @@ Key mappings related to org-capture.
   (define-key global-map (kbd "C-c i") 'org-capture-inbox)
 #+end_src
 
+** Refiling
+Refile should always be done either to the projects file or to the 
+someday/maybe list.
+
+#+begin_src emacs-lisp
+  (setq org-refile-targets '(("~/org/gtd/projects.org" :maxlevel . 3)
+                             ("~/org/gtd/someday.org" :level . 1)))
+#+end_src
+
+** Agenda
+The agenda should remind me of things in the inbox and the projects file.
+
+#+begin_src emacs-lisp
+  (setq org-agenda-files '("~/org/gtd/inbox.org"
+                           "~/org/gtd/projects.org"))
+#+end_src
+
 * Terminal Emulation
 ** Vterm
-Normally I use ansi-term, but I decided to give vterm a go.
+Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
 
 #+begin_src emacs-lisp
   (use-package vterm
     :ensure t)
   (global-set-key (kbd "<s-return>") 'vterm)
 #+end_src
+
+
+
 * TODO CLEAN UP
 
 ** User interface
@@ -216,14 +239,8 @@ I will do this when I get comfortable enough with Emacs keybindings
   ;(setq org-agenda-files '("~/org"
   ;                         "~/org/lang"
   ;                         "~/.emacs.d/settings.org"))
-  (setq org-log-done 'time)
-  (setq org-todo-keywords
-        '((sequence "TODO(t)"
-                    "STARTED(s)"
-                    "WAITING(w)"
-                    "|"
-                    "DONE(d)"
-                    "CANCELLED(c)")))
+  
+  
 #+END_SRC
 
 ** TODO should I add POSTPONED to the keywords?
