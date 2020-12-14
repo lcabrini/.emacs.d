@@ -161,7 +161,7 @@ I will do this when I get comfortable enough with Emacs keybindings
   (defadvice ansi-term (before force-bash)
     (interactive (list my-term-shell)))
   (ad-activate 'ansi-term)
-  (global-set-key (kbd "<s-return>") 'ansi-term)
+  ;; (global-set-key (kbd "<s-return>") 'ansi-term)
 #+end_src
 ** Swiper
 #+BEGIN_SRC emacs-lisp
