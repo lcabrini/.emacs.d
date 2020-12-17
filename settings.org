@@ -4,7 +4,7 @@
 #+FILETAGS: :emacs:config:
 
 This is my personal Emacs configuration. As most Emacs users, I maintain this 
-asan org-mode file.
+as an org-mode file.
 
 It is currently in a bit of a mess, but I'm working on cleaning it up. The 
 section called =CLEAN UP= contains all the stuff that needs to be reviewed and 
@@ -43,20 +43,31 @@ also like to switch themes from time to time.
 This is my favorite theme and the one I use most of the time. ([[https://github.com/purcell/color-theme-sanityinc-tomorrow][GitHub]])
 
 #+begin_src emacs-lisp
-  (use-package color-theme-sanityinc-tomorrow
-    :ensure t
-    :init
-    (load-theme 'sanityinc-tomorrow-blue t))
+  ;; (use-package color-theme-sanityinc-tomorrow
+  ;;   :ensure t
+  ;;   :init
+  ;;   (load-theme 'sanityinc-tomorrow-blue t))
 #+end_src
 
 *** Zenburn
-This is not a bad theme, but it seems to hurt my eyes. ([[https://github.com/bbatsov/zenburn-emacs][GitHub]])
+This is not a bad theme. ([[https://github.com/bbatsov/zenburn-emacs][GitHub]])
 
 #+begin_src emacs-lisp
-  ;; (use-package zenburn-theme
-  ;;   :ensure t
-  ;;   :init
-  ;;   (load-theme 'zenburn t))
+  (use-package zenburn-theme
+    :ensure t
+    :init
+    (load-theme 'zenburn t))
+#+end_src
+
+I found a few modifications [[https://github.com/bbatsov/zenburn-emacs/issues/350][here]] to make some things a little easier to
+read.
+
+#+begin_src emacs-lisp
+  (setq zenburn-override-colors-alist
+        '(("zenburn-red" . "#de7a78")
+          ("zenburn-bg-05" . "#292928")
+          ("zenburn-bg" . "#3b3837")))
+
 #+end_src
 ** Fonts
 * Org Mode
