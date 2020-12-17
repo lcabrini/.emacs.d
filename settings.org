@@ -79,7 +79,8 @@ I use Org mode for almost everything.
 #+end_src
 
 ** Todo
-I used to have a =STARTED= keyword in the list, but I never really used it.
+I used to have a =STARTED= keyword in the list, but I never really used it. I
+think the current list is fine, although I'm considering adding =NEXT= to it.
 
 #+begin_src emacs-lisp
   (setq org-todo-keywords
@@ -143,6 +144,17 @@ Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
 #+end_src
 
 
+* Development
+** Company mode
+
+Company mode allows for autocompletion.
+
+#+begin_src emacs-lisp
+  (use-package company
+    :ensure t
+    :init
+    (global-company-mode)
+#+end_src
 
 * TODO CLEAN UP
 
@@ -238,16 +250,6 @@ Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
     (powerline-default-theme)
 #+END_SRC
 
-** Org
-#+BEGIN_SRC emacs-lisp
-  
-  ;(setq org-agenda-files '("~/org"
-  ;                         "~/org/lang"
-  ;                         "~/.emacs.d/settings.org"))
-  
-  
-#+END_SRC
-
 ** Org-drill
 #+BEGIN_SRC emacs-lisp
   (use-package org-drill
@@ -282,11 +284,6 @@ Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
 #+END_SRC
 ** Company
 #+BEGIN_SRC emacs-lisp
-  ; (use-package company
-  ;  :ensure t
-  ;  :init
-  ;  (global-company-mode))
-  ;
   ; (use-package company-go
   ;  :ensure t)
 #+END_SRC
