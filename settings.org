@@ -178,6 +178,11 @@ Magit is amazing!
 ** Project Management
 ** Programming Languages
 *** C
+I use the Linux style for formatting C code.
+
+#+begin_src emacs-lisp
+(setq c-default-style "linux")
+#+end_src
 *** Go
 *** Python
 ** Web Development
