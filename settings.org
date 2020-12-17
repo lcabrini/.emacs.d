@@ -24,6 +24,16 @@ Load up my index file on startup.
 (setq initial-buffer-choice "~/org/index.org")
 #+end_src
 
+** Which Key
+The [[https://github.com/justbur/emacs-which-key][which-key]] package is a neat little utility that shows possible completions
+of a command.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
+#+END_SRC
 * User Interface
 My user interface setup.
 
@@ -145,7 +155,7 @@ Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
 
 
 * Development
-** Company mode
+** Text Completion
 
 Company mode allows for autocompletion.
 
@@ -156,8 +166,42 @@ Company mode allows for autocompletion.
     (global-company-mode)
 #+end_src
 
-* TODO CLEAN UP
+** Revision Control
 
+Magit is amazing!
+
+#+begin_src emacs-lisp
+  (use-package magit
+    :ensure t)
+#+end_src
+
+** Project Management
+** Programming Languages
+*** C
+*** Go
+*** Python
+** Web Development
+
+* Living in Emacs
+** Accounting
+
+I use ledger mode to allow me to edit ledger files from Emacs and to generate
+reports.
+
+#+begin_src lisp
+  (use-package ledger-mode
+    :ensure t
+    :init
+    (setq ledger-clear-whole-transactions 1)
+    :mode "\\.ledger\\'")
+#+end_src
+
+
+
+
+
+
+* TODO CLEAN UP
 ** User interface
 #+BEGIN_SRC emacs-lisp
     
@@ -267,21 +311,7 @@ Company mode allows for autocompletion.
    '((ledger . t)))
 
 #+end_src
-** Ledger
-#+begin_src lisp
-  (use-package ledger-mode
-    :ensure t
-    :init
-    (setq ledger-clear-whole-transactions 1)
-    :mode "\\.ledger\\'")
-#+end_src
-** Which key
-#+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :ensure t
-    :config
-    (which-key-mode))
-#+END_SRC
+
 ** Company
 #+BEGIN_SRC emacs-lisp
   ; (use-package company-go
@@ -295,11 +325,7 @@ Company mode allows for autocompletion.
     (yas-global-mode 1))
   (add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 #+END_SRC
-** Magit
-#+begin_src emacs-lisp
-  (use-package magit
-    :ensure t)
-#+end_src
+
 ** Projectile
 #+begin_src emacs-lisp
   (use-package projectile
