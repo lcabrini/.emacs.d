@@ -153,7 +153,6 @@ Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
   (global-set-key (kbd "<s-return>") 'vterm)
 #+end_src
 
-
 * Development
 ** Text Completion
 
@@ -163,7 +162,7 @@ Company mode allows for autocompletion.
   (use-package company
     :ensure t
     :init
-    (global-company-mode)
+    (global-company-mode))
 #+end_src
 
 ** Revision Control
@@ -177,11 +176,11 @@ Magit is amazing!
 
 ** Project Management
 ** Programming Languages
-*** C
+*** COMMENT C
 I use the Linux style for formatting C code.
 
 #+begin_src emacs-lisp
-(setq c-default-style "linux")
+  (setq c-default-style "linux")
 #+end_src
 *** Go
 *** Python
