@@ -152,10 +152,6 @@ Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
   (setq display-time-24hr-format t)
   (display-time-mode t)
 #+END_SRC
-** DONE disable the menu bar
-CLOSED: [2020-04-07 mar 22:15]
-I will do this when I get comfortable enough with Emacs keybindings
-
 ** Fonts
 #+BEGIN_SRC emacs-lisp
   (set-face-attribute 'default nil :font "DejaVu Sans Mono")
@@ -231,8 +227,6 @@ I will do this when I get comfortable enough with Emacs keybindings
     (powerline-default-theme)
 #+END_SRC
 
-** TODO show the (date and) time
-
 ** Org
 #+BEGIN_SRC emacs-lisp
   
@@ -242,8 +236,6 @@ I will do this when I get comfortable enough with Emacs keybindings
   
   
 #+END_SRC
-
-** TODO should I add POSTPONED to the keywords?
 
 ** Org-drill
 #+BEGIN_SRC emacs-lisp
@@ -514,22 +506,6 @@ I will do this when I get comfortable enough with Emacs keybindings
 #+begin_src emacs-lisp
   (use-package pass
     :ensure t)
-#+end_src
-** Emacs Application Framework
-Requires some out-of-emacs setup. I used =yay -S emacs-eaf=.
-#+begin_src emacs-lisp
-  (use-package eaf
-    :load-path "/usr/share/emacs/site-lisp/eaf"
-    :custom
-    (eaf-find-alternate-file-in-dired t)
-    :config
-    (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
-    (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
-    (eaf-bind-key take_photo "p" eaf-camera-keybinding))
-#+end_src
-** Open index.org
-#+begin_src emacs-lisp
-;(setq initial-buffer-choice "~/org/index.org")
 #+end_src
 ** TODO configuration [4/5]                                      :@computer:
 - [X] set up fonts [3/3]
