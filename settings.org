@@ -211,6 +211,14 @@ Company mode allows for autocompletion.
     (global-company-mode))
 #+end_src
 
+Autocompletion is possibly useful at times, but it also gets really annoying.
+I don't want it for Org mode files. (I'm probably goint to disable it for
+other modes as well later.)
+
+#+begin_src emacs-lisp
+  (setq company-global-modes '(not org-mode))
+#+end_src
+
 ** Revision Control
 
 Magit is amazing!
