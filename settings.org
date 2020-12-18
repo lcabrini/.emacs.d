@@ -57,6 +57,15 @@ install the required fonts:
 #+begin_src emacs-lisp
   (use-package all-the-icons)
 #+end_src
+
+We might as well add icons to dired mode as well. Silly, but pretty. ;)
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons-dired
+    :after all-the-icons
+    :hook
+    (dired-mode . all-the-icons-dired-mode))
+#+end_src
 ** Theme
 I normally prefer a blue theme, since it reminds me of the Amiga. However, I
 also like to switch themes from time to time. 
