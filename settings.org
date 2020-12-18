@@ -93,7 +93,22 @@ read.
 #+end_src
 ** Modeline
 
-I think I like [[https://github.com/seagle0128/doom-modeline][doom-modeline]]. It looks really clean.
+I struggled to get the modeline the way I wanted it. The default modeline
+easily gets cluttered with minor modes, so important information gets hidden
+away. [[https://github.com/milkypostman/powerline][Powerline]] only tries to be pretty, without addressing functionality.
+
+I could probably spend some time configuring the modeline or powerline to
+my liking, but with so many other things to configure, you'd think that the
+default would be simple and uncluttered. I didn't feel like I had found the
+right solution.
+
+Then I came across [[https://github.com/seagle0128/doom-modeline][doom-modeline]] and I like it. It's simple and clean, so I
+can see the information that I need to. Perhaps it's not as "pretty" as
+powerline (though this is in the eye of the beholder), but I'll happily 
+sacrifice looks for functionality.
+
+For now, I'm quite happy with the default layout. If ever it becomes important
+to me, I'll customize that as well.
 
 #+begin_src emacs-lisp
   (use-package doom-modeline
