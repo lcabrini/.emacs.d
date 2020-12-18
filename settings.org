@@ -198,7 +198,7 @@ Magit is amazing!
 
 ** Project Management
 ** Programming Languages
-*** COMMENT C
+*** C
 I use the Linux style for formatting C code.
 
 #+begin_src emacs-lisp
