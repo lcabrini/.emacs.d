@@ -45,6 +45,18 @@ My user interface setup.
   (global-hl-line-mode t)
 #+end_src
 
+** Icons
+
+The [[https://github.com/domtronn/all-the-icons.el][all-the-icons]] package provides icons. You need to run the following the
+install the required fonts:
+
+#begin_example
+  M-x all-the-icons-install-fonts
+#+end_example
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons)
+#+end_src
 ** Theme
 I normally prefer a blue theme, since it reminds me of the Amiga. However, I
 also like to switch themes from time to time. 
@@ -78,6 +90,31 @@ read.
           ("zenburn-bg-05" . "#292928")
           ("zenburn-bg" . "#3b3837")))
 
+#+end_src
+** Modeline
+
+I struggled to get the modeline the way I wanted it. The default modeline
+easily gets cluttered with minor modes, so important information gets hidden
+away. [[https://github.com/milkypostman/powerline][Powerline]] only tries to be pretty, without addressing functionality.
+
+I could probably spend some time configuring the modeline or powerline to
+my liking, but with so many other things to configure, you'd think that the
+default would be simple and uncluttered. I didn't feel like I had found the
+right solution.
+
+Then I came across [[https://github.com/seagle0128/doom-modeline][doom-modeline]] and I like it. It's simple and clean, so I
+can see the information that I need to. Perhaps it's not as "pretty" as
+powerline (though this is in the eye of the beholder), but I'll happily 
+sacrifice looks for functionality.
+
+For now, I'm quite happy with the default layout. If ever it becomes important
+to me, I'll customize that as well.
+
+#+begin_src emacs-lisp
+  (use-package doom-modeline
+    :ensure t
+    :init
+    (doom-modeline-mode 1))
 #+end_src
 ** Fonts
 * Org Mode
@@ -153,7 +190,6 @@ Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
   (global-set-key (kbd "<s-return>") 'vterm)
 #+end_src
 
-
 * Development
 ** Text Completion
 
@@ -163,7 +199,7 @@ Company mode allows for autocompletion.
   (use-package company
     :ensure t
     :init
-    (global-company-mode)
+    (global-company-mode))
 #+end_src
 
 ** Revision Control
@@ -181,7 +217,7 @@ Magit is amazing!
 I use the Linux style for formatting C code.
 
 #+begin_src emacs-lisp
-(setq c-default-style "linux")
+  (setq c-default-style "linux")
 #+end_src
 *** Go
 *** Python
@@ -294,9 +330,9 @@ reports.
 
 ** Powerline
 #+BEGIN_SRC emacs-lisp
-    (use-package powerline
-      :ensure t)
-    (powerline-default-theme)
+    ;; (use-package powerline
+    ;;  :ensure t)
+    ;; (powerline-default-theme)
 #+END_SRC
 
 ** Org-drill
