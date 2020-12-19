@@ -84,10 +84,10 @@ This is my favorite theme and the one I use most of the time. ([[https://github.
 This is not a bad theme. ([[https://github.com/bbatsov/zenburn-emacs][GitHub]])
 
 #+begin_src emacs-lisp
-  ;; (use-package zenburn-theme
-  ;;  :ensure t
-  ;;  :init
-  ;;  (load-theme 'zenburn t))
+  (use-package zenburn-theme
+    :ensure t
+    :init
+    (load-theme 'zenburn t))
 #+end_src
 
 I found a few modifications [[https://github.com/bbatsov/zenburn-emacs/issues/350][here]] to make some things a little easier to
@@ -105,12 +105,12 @@ read.
 I just tried this out and kind of like it.
 
 #+begin_src emacs-lisp
-  (use-package doom-themes
-    :config
-    (setq doom-themes-enable-bold t
-          doom-themes-enable-italic t)
-    (load-theme 'doom-one t)
-    (doom-themes-org-config))
+  ;; (use-package doom-themes
+  ;;  :config
+  ;;  (setq doom-themes-enable-bold t
+  ;;        doom-themes-enable-italic t)
+  ;;  (load-theme 'doom-one t)
+  ;;  (doom-themes-org-config))
 #+end_src
 ** Modeline
 
