@@ -232,7 +232,8 @@ With [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]], Emacs becomes a client
     :commands
     (lsp lsp-deferred)
     :hook
-    (go-mode . lsp-deferred))
+    (go-mode . lsp-deferred)
+    (python-mode . lsp-deferred))
 #+end_src
 
 The [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] package adds some UI stuff.
@@ -242,7 +243,7 @@ The [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] package adds some UI stuff.
     :ensure t
     :commands lsp-ui-mode)
 
-  (setq lsp-ui-doc-enable nil)
+   (setq lsp-ui-doc-enable nil)
 #+end_src
 ** Text Completion
 
@@ -285,8 +286,8 @@ I use the Linux style for formatting C code.
 #+end_src
 *** Go
 
-I use Go quite a bit. In order for lsp-mode to work with Go, [[https://github.com/golang/tools/tree/master/gopls][gopls]] needs to be
-installed somewhere in $PATH.
+I use Go quite a bit. In order for lsp-mode to work with Go, [[https://github.com/golang/tools/tree/master/gopls][gopls]] needs to
+be installed somewhere in $PATH.
 
 #+begin_example
 $ GO111MODULE=on go get golang.org/x/tools/gopls@latest
@@ -319,6 +320,12 @@ Use company-mode
   ;;            (company-mode)))
 #+end_src
 *** Python
+
+Install python-language-server for lsp-mode to work with python.
+
+#+begin_example
+$ sudo pip install python-language-server
+#+end_example
 ** Web Development
 
 * Living in Emacs
