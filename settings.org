@@ -249,7 +249,8 @@ but it also feels very intrusive.
     (lsp lsp-deferred)
     :hook
     (go-mode . lsp-deferred)
-    (python-mode . lsp-deferred))
+    (python-mode . lsp-deferred)
+    (sh-mode . lsp-deferred))
 #+end_src
 
 The [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] package adds some UI stuff.
@@ -299,6 +300,20 @@ Magit is amazing!
 ** Project Management
 ** Programming Languages
 *** C
+Set up lsp-mode for C.
+
+#+begin_src emacs-lisp
+  (add-hook 'c-mode-hook #'lsp-deferred)
+#+end_src
+
+The language server that I'm using for C mode is clangd, which I installed from
+the Arch repos.
+
+#+begin_example
+  sudo pacman -Ss clang
+#+end_example
+
+
 I use the Linux style for formatting C code.
 
 #+begin_src emacs-lisp
