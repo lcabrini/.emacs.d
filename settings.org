@@ -3,7 +3,7 @@
 #+LANGUAGE: en
 #+FILETAGS: :emacs:config:
 
-This is my personal Emacs configuration. As most Emacs users, I maintain this 
+This is my personal Emacs configuration. As most Emacs users, I maintain this
 as an org-mode file.
 
 *NOTE*: I do not use Doom Emacs, Spacemacs or any other "distribution", just
@@ -11,12 +11,11 @@ vanilla Emacs. However, I have added some packages that I find useful from
 Doom Emacs (not sure about Spacemacs).
 
 Although I've been using Emacs for quite a long time, I'm by no means an expert
-on it. Most of the stuff collected here has been "borrow" from elsewhere. 
+on it. Most of the stuff collected here has been "borrowed" from elsewhere. 
 
 A partial list of Emacs configs that I have found useful follows:
 - [[https://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]]: the Queen of Emacs. Lots of useful stuff here.
 - [[https://github.com/daedreth/UncleDavesEmacs][Uncle Dave]]: detailed Emacs configuration.
-
 
 * Basics
 ** Personal Information
@@ -42,6 +41,12 @@ of a command.
     :config
     (which-key-mode))
 #+END_SRC
+** Language Environment
+Use UTF-8.
+
+#+begin_src emacs-lisp
+  (set-language-environment "UTF-8")
+#+end_src
 ** Performance
 Some performacs related settings, mostly required by lsp-mode (see below).
 
@@ -128,7 +133,6 @@ I just tried this out and kind of like it.
     (doom-themes-org-config))
 #+end_src
 ** Modeline
-
 I struggled to get the modeline the way I wanted it. The default modeline
 easily gets cluttered with minor modes, so important information gets hidden
 away. [[https://github.com/milkypostman/powerline][Powerline]] only tries to be pretty, without addressing functionality.
@@ -154,16 +158,37 @@ to me, I'll customize that as well.
     :config
     (setq doom-modeline-icon t)
     (setq doom-modeline-buffer-file-name-style 'file-name)
-    (column-number-mode t)
-    )
+    (column-number-mode t))
 #+end_src
-** Fonts
-* Org Mode
-I use Org mode for almost everything.
+
+Since I don't use any panels in my window manager setup, I want to see current
+time in the Emacs modeline.
 
 #+begin_src emacs-lisp
-  (setq org-startup-indented t)
-  (setq org-log-done 'time)
+  (setq display-time-default-load-average nil)
+  (setq display-time-24hr-format t)
+  (display-time-mode t)
+#+end_src
+** Fonts
+** Org-mode Bullets
+In the past I have used [[https://github.com/sabof/org-bullets][org-bullets]], but it gave me a few problems that I
+couldn't figure out at the time. Recently, I found  [[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]], which
+I'm giving a try for a while.
+
+#+begin_src emacs-lisp
+  (use-package org-superstar
+    :ensure t)
+
+  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+#+end_src
+* Org Mode
+I use Org mode for almost everything. Here are a few basic settings, that need
+to be reviewed and possibly moved elsewehere.
+
+#+begin_src emacs-lisp
+  (setq org-startup-indented t) 
+  (setq org-hide-emphasis-markers t)
+  (setq org-hide-leading-stars t)
 #+end_src
 
 ** Todo
@@ -221,9 +246,30 @@ The agenda should remind me of things in the inbox and the projects file.
                            "~/org/gtd/projects.org"))
 #+end_src
 
+** Log
+Add time when logging done tasks.
+
+#+begin_src emacs-lisp
+  (setq org-log-done 'time)
+#+end_src
+** Drill
+I don't really use [[https://orgmode.org/worg/org-contrib/org-drill.html][org-drill]] any more, since I've gone back to Anki. But,
+just in case, I'll keep my configuration here.
+
+#+begin_src emacs-lisp
+  (use-package org-drill
+    :ensure t)
+
+  (setq org-drill-add-random-noise-to-intervals-p t)
+  (setq org-drill-scope 'directory)
+  (setq org-drill-learn-fraction 0.4)
+  (setq org-drill-maximum-items-per-session 50)
+  (setq org-drill-maximum-duration 30)
+#+end_src
 * Terminal Emulation
 ** Vterm
-Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
+Since I discovered [[https://github.com/akermu/emacs-libvterm][vterm]] it has become my standard terminal emulator for
+Emacs.
 
 #+begin_src emacs-lisp
   (use-package vterm
@@ -231,6 +277,52 @@ Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
   (global-set-key (kbd "<s-return>") 'vterm)
 #+end_src
 
+** Ansi term
+Before vterm, I mostly used ansi-term. I'm keeping the configuration here
+just in case I need it.
+
+#+begin_src emacs-lisp
+  (defvar my-term-shell "/bin/bash")
+  (defadvice ansi-term (before force-bash)
+    (interactive (list my-term-shell)))
+  (ad-activate 'ansi-term)
+  ;; (global-set-key (kbd "<s-return>") 'ansi-term)
+#+end_src
+* Working with Text
+
+Company mode allows for autocompletion.
+
+#+begin_src emacs-lisp
+  (use-package company
+    :ensure t
+    :init
+    (global-company-mode)
+    :config
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 1))
+#+end_src
+
+Autocompletion is possibly useful at times, but it also gets really annoying.
+I don't want it for Org mode files. (I'm probably goint to disable it for
+other modes as well later.)
+
+#+begin_src emacs-lisp
+  (setq company-global-modes '(not org-mode))
+#+end_src
+
+* Windows and Buffers
+I find [[https://github.com/abo-abo/ace-window][ace-window]] to work well for me for quickly switching between windows.
+
+#+begin_src emacs-lisp
+  (use-package ace-window
+    :ensure t
+    :init
+    (progn
+      (global-set-key [remap other-window] 'ace-window)
+      (custom-set-faces
+       '(aw-leading-char-face
+         ((t (:inherit ace-jump-face-foreground :height 3.0)))))))
+#+end_src
 * Development
 ** Language Server Protocol
 The [[https://en.wikipedia.org/wiki/Language_Server_Protocol][Language Server Protocol]] allows for communication between a text editor
@@ -262,28 +354,6 @@ The [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] package adds some UI stuff.
 Here are some useful links related to lsp-mode:
 - [[https://emacs-lsp.github.io/lsp-mode/page/performance/][Performance]]: from the lsp-mode site
 - [[http://blog.binchen.org/posts/how-to-speed-up-lsp-mode.html][How to speed up lsp-mode]]: blog post by Chen Bin
-** Text Completion
-
-Company mode allows for autocompletion.
-
-#+begin_src emacs-lisp
-  (use-package company
-    :ensure t
-    :init
-    (global-company-mode)
-    :config
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 1))
-#+end_src
-
-Autocompletion is possibly useful at times, but it also gets really annoying.
-I don't want it for Org mode files. (I'm probably goint to disable it for
-other modes as well later.)
-
-#+begin_src emacs-lisp
-  (setq company-global-modes '(not org-mode))
-#+end_src
-
 ** Revision Control
 
 Magit is amazing!
@@ -356,7 +426,23 @@ Use company-mode. (This seems to not be needed.)
   ;;            (company-mode)))
 #+end_src
 *** Python
-Set up lsp-mode for python
+I use [[https://www.python.org/][Python]] quite a lot.
+
+#+begin_src emacs-lisp
+  (use-package python
+    :ensure nil)
+#+end_src
+
+This packages adds support for Python virtual environents.
+
+#+begin_src emacs-lisp
+  (use-package pyvenv
+    :ensure t
+    :config
+    (pyvenv-mode 1))
+#+end_src
+
+Set up lsp-mode for python.
 
 #+begin_src emacs-lisp
   (add-hook 'python-mode-hook #'lsp-deferred)
@@ -386,9 +472,8 @@ keep it.
 ** Web Development
 * Living in Emacs
 ** Accounting
-
-I use ledger mode to allow me to edit ledger files from Emacs and to generate
-reports.
+I use [[https://www.ledger-cli.org/][ledger]] to help manage my personal finances. Of course, there is a
+[[https://www.ledger-cli.org/3.0/doc/ledger-mode.html][ledger-mode]] for Emacs as well.
 
 #+begin_src lisp
   (use-package ledger-mode
@@ -397,30 +482,30 @@ reports.
     (setq ledger-clear-whole-transactions 1)
     :mode "\\.ledger\\'")
 #+end_src
+** Feeds
+I use [[https://github.com/skeeto/elfeed][elfeed]] to subscribe to RSS feeds and podcasts.
 
+#+begin_src emacs-lisp
+  (use-package elfeed
+    :ensure t)
 
+  (global-set-key (kbd "C-x w") 'elfeed)
+#+end_src
 
+I configure my feeds via [[https://github.com/remyhonig/elfeed-org][elfeed-org]].
+
+#+begin_src emacs-lisp
+  (use-package elfeed-org
+    :ensure t
+    :init
+    (elfeed-org))
+
+  (setq rmh-elfeed-org-files (list "~/org/feeds.org"))
+#+end_src
 
 
 
 * TODO CLEAN UP
-** User interface
-#+BEGIN_SRC emacs-lisp
-    
-    ;;(load-theme 'wheatgrass t)
-    ;;(use-package zenburn-theme
-    ;;  :ensure t
-    ;;  :init
-    ;;  (load-theme 'zenburn t))
-
-    (set-language-environment "UTF-8")
-    ;(global-hl-line-mode t)
-    ;(global-prettify-symbols-mode t)
-
-  (setq display-time-default-load-average nil)
-  (setq display-time-24hr-format t)
-  (display-time-mode t)
-#+END_SRC
 ** Fonts
 #+BEGIN_SRC emacs-lisp
   (set-face-attribute 'default nil :font "DejaVu Sans Mono")
@@ -432,25 +517,6 @@ reports.
   (set-fontset-font t 'hangul
                     (font-spec :family "Noto Sans CJK KR"))
 #+END_SRC
-** Buffers and windows
-#+BEGIN_SRC emacs-lisp
-  (use-package ace-window
-    :ensure t
-    :init
-    (progn
-      (global-set-key [remap other-window] 'ace-window)
-      (custom-set-faces
-       '(aw-leading-char-face
-         ((t (:inherit ace-jump-face-foreground :height 3.0)))))))
-#+END_SRC
-** Ansi term
-#+begin_src emacs-lisp
-  (defvar my-term-shell "/bin/bash")
-  (defadvice ansi-term (before force-bash)
-    (interactive (list my-term-shell)))
-  (ad-activate 'ansi-term)
-  ;; (global-set-key (kbd "<s-return>") 'ansi-term)
-#+end_src
 ** Swiper
 #+BEGIN_SRC emacs-lisp
   (use-package counsel
@@ -489,21 +555,6 @@ reports.
 (global-set-key [C-mouse-5] 'text-scale-decrease)
 #+END_SRC
 
-** Org-drill
-#+BEGIN_SRC emacs-lisp
-  (use-package org-drill
-    :ensure t)
-  (setq org-drill-add-random-noise-to-intervals-p t)
-  (setq org-drill-scope 'directory)
-  (setq org-drill-learn-fraction 0.4)
-  (setq org-drill-maximum-items-per-session 50)
-  (setq org-drill-maximum-duration 30)
-#+END_SRC
-
-** Company
-#+BEGIN_SRC emacs-lisp
-  
-#+END_SRC
 ** Yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
@@ -610,21 +661,13 @@ reports.
 #+end_src
 
 ** Programming
-*** Go
-#+BEGIN_SRC emacs-lisp
-  
-#+END_SRC
 *** Python
 #+BEGIN_SRC emacs-lisp
-  (use-package python
-    :ensure nil)
+  
     ; :hook
     ; ((python-mode . jedi:setup)))
 
-  (use-package pyvenv
-    :ensure t
-    :config
-    (pyvenv-mode 1))
+  
 
   ; (use-package company-jedi
   ;  :ensure t
@@ -691,15 +734,7 @@ reports.
 #+END_SRC
 ** Elfeed
 #+BEGIN_SRC emacs-lisp
-  (use-package elfeed
-    :ensure t)
-  (global-set-key (kbd "C-x w") 'elfeed)
-
-  (use-package elfeed-org
-    :ensure t
-    :init
-    (elfeed-org))
-  (setq rmh-elfeed-org-files (list "~/org/feeds.org"))
+  
 #+END_SRC
 ** Matrix-client
 #+begin_src emacs-lisp
