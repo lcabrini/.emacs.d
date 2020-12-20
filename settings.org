@@ -246,11 +246,7 @@ but it also feels very intrusive.
   (use-package lsp-mode
     :ensure t
     :commands
-    (lsp lsp-deferred)
-    :hook
-    (go-mode . lsp-deferred)
-    (python-mode . lsp-deferred)
-    (sh-mode . lsp-deferred))
+    (lsp lsp-deferred))
 #+end_src
 
 The [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] package adds some UI stuff.
@@ -300,6 +296,7 @@ Magit is amazing!
 ** Project Management
 ** Programming Languages
 *** C
+**** LSP
 Set up lsp-mode for C.
 
 #+begin_src emacs-lisp
@@ -313,6 +310,7 @@ the Arch repos.
   sudo pacman -Ss clang
 #+end_example
 
+**** Formatting code
 
 I use the Linux style for formatting C code.
 
@@ -320,9 +318,15 @@ I use the Linux style for formatting C code.
   (setq c-default-style "linux")
 #+end_src
 *** Go
+**** LSP
+Set up lsp-mode to work with Go.
 
-I use Go quite a bit. In order for lsp-mode to work with Go, [[https://github.com/golang/tools/tree/master/gopls][gopls]] needs to
-be installed somewhere in $PATH. ([[https://github.com/golang/tools/blob/master/gopls/doc/emacs.md][Instructions]])
+#+begin_src emacs-lisp
+  (add-hook 'go-mode-hook #'lsp-deferred)
+#+end_src
+
+In order for lsp-mode to work with Go, [[https://github.com/golang/tools/tree/master/gopls][gopls]] needs to be installed somewhere 
+in $PATH. ([[https://github.com/golang/tools/blob/master/gopls/doc/emacs.md][Instructions]])
 
 #+begin_example
   $ GO111MODULE=on go get golang.org/x/tools/gopls@latest
@@ -343,6 +347,7 @@ Set up hooks to clean up the code on save.
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 #+end_src
 
+**** Company
 Use company-mode. (This seems to not be needed.)
 
 #+begin_src emacs-lisp
@@ -355,14 +360,36 @@ Use company-mode. (This seems to not be needed.)
   ;;            (company-mode)))
 #+end_src
 *** Python
+**** LSP
+Set up lsp-mode for python
 
-Install python-language-server for lsp-mode to work with python.
+#+begin_src emacs-lisp
+  (add-hook 'python-mode-hook #'lsp-deferred)
+#+end_src
+
+In order to work, lsp-mode needs a python language server. I'm simply using
+python-language-server, available via pip.
 
 #+begin_example
 $ sudo pip install python-language-server
 #+end_example
-** Web Development
+*** Bash
+**** LSP
+Set up lsp-mode for bash.
 
+#+begin_src emacs-lisp
+  (add-hook 'sh-mode-hook #'lsp-deferred)
+#+end_src
+
+The bash-language-server is available in the Arch repos.
+
+#+begin_example
+  $ sudo pacman -Ss bash-language-server
+#+end_example
+
+The bash language server has been a bit iffy for me. I'm not sure I'm going to
+keep it.
+** Web Development
 * Living in Emacs
 ** Accounting
 
