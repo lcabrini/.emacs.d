@@ -6,9 +6,17 @@
 This is my personal Emacs configuration. As most Emacs users, I maintain this 
 as an org-mode file.
 
-It is currently in a bit of a mess, but I'm working on cleaning it up. The 
-section called =CLEAN UP= contains all the stuff that needs to be reviewed and 
-put in the right location.
+*NOTE*: I do not use Doom Emacs, Spacemacs or any other "distribution", just
+vanilla Emacs. However, I have added some packages that I find useful from 
+Doom Emacs (not sure about Spacemacs).
+
+Although I've been using Emacs for quite a long time, I'm by no means an expert
+on it. Most of the stuff collected here has been "borrow" from elsewhere. 
+
+A partial list of Emacs configs that I have found useful follows:
+- [[https://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]]: the Queen of Emacs. Lots of useful stuff here.
+- [[https://github.com/daedreth/UncleDavesEmacs][Uncle Dave]]: detailed Emacs configuration.
+
 
 * Basics
 ** Personal Information
@@ -35,6 +43,8 @@ of a command.
     (which-key-mode))
 #+END_SRC
 ** Performance
+Some performacs related settings, mostly required by lsp-mode (see below).
+
 #+begin_src emacs-lisp
   (setq gc-cons-threshold 200000000)
   (setq read-process-output-max (* 1024 1024))
@@ -223,9 +233,15 @@ Normally I use ansi-term, but I decided to give vterm a go. So far, so good.
 
 * Development
 ** Language Server Protocol
-
-With [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]], Emacs becomes a client to an LSP server.
+The [[https://en.wikipedia.org/wiki/Language_Server_Protocol][Language Server Protocol]] allows for communication between a text editor
+and an LSP server, that is a server that provides features for a specific
+programming language. With [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]], Emacs becomes a client to LSP servers.
  
+I'm currently experimenting with LSP and have only enabled it for a few 
+languages. There is still a lot of configuration to do and I'm still not
+convinced that I really want to use it. I do like some things about LSP, 
+but it also feels very intrusive.
+
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :ensure t
@@ -245,6 +261,10 @@ The [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] package adds some UI stuff.
 
    (setq lsp-ui-doc-enable nil)
 #+end_src
+
+Here are some useful links related to lsp-mode:
+- [[https://emacs-lsp.github.io/lsp-mode/page/performance/][Performance]]: from the lsp-mode site
+- [[http://blog.binchen.org/posts/how-to-speed-up-lsp-mode.html][How to speed up lsp-mode]]: blog post by Chen Bin
 ** Text Completion
 
 Company mode allows for autocompletion.
@@ -287,11 +307,11 @@ I use the Linux style for formatting C code.
 *** Go
 
 I use Go quite a bit. In order for lsp-mode to work with Go, [[https://github.com/golang/tools/tree/master/gopls][gopls]] needs to
-be installed somewhere in $PATH.
+be installed somewhere in $PATH. ([[https://github.com/golang/tools/blob/master/gopls/doc/emacs.md][Instructions]])
 
 #+begin_example
-$ GO111MODULE=on go get golang.org/x/tools/gopls@latest
-$ sudo cp ~/go/bin/gopls /usr/local/bin
+  $ GO111MODULE=on go get golang.org/x/tools/gopls@latest
+  $ sudo cp ~/go/bin/gopls /usr/local/bin
 #+end_example
 
 #+begin_src emacs-lisp
@@ -308,7 +328,7 @@ Set up hooks to clean up the code on save.
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 #+end_src
 
-Use company-mode
+Use company-mode. (This seems to not be needed.)
 
 #+begin_src emacs-lisp
   ;;(use-package company-go
@@ -669,13 +689,3 @@ reports.
   (use-package pass
     :ensure t)
 #+end_src
-** TODO configuration [4/5]                                      :@computer:
-- [X] set up fonts [3/3]
-  - [X] Korean
-  - [X] Japanese
-  - [X] Chinese
-- [X] keybindings to zoom in/zoom out
-- [ ] follow links by hitting enter
-- [X] don't ask which shell to run in =term=
-- [X] install which-key package
-
