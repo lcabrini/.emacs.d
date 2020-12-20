@@ -448,12 +448,16 @@ Set up lsp-mode for python.
   (add-hook 'python-mode-hook #'lsp-deferred)
 #+end_src
 
-In order to work, lsp-mode needs a python language server. I'm simply using
-python-language-server, available via pip.
+In order to work, lsp-mode needs a python language server. When using
+virtual environments, the python language server needs to be installed
+in the virtual environment itself.
 
 #+begin_example
-$ sudo pip install python-language-server
+(.venv) $ pip install python-language-server
 #+end_example
+
+Some links to more information.
+- [[https://vxlabs.com/2018/06/08/python-language-server-with-emacs-and-lsp-mode/][Configuring Emacs, lsp-mode and the python langauge server]]
 *** Bash
 Set up lsp-mode for bash.
 
