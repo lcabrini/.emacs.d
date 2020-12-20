@@ -296,7 +296,6 @@ Magit is amazing!
 ** Project Management
 ** Programming Languages
 *** C
-**** LSP
 Set up lsp-mode for C.
 
 #+begin_src emacs-lisp
@@ -310,15 +309,12 @@ the Arch repos.
   sudo pacman -Ss clang
 #+end_example
 
-**** Formatting code
-
 I use the Linux style for formatting C code.
 
 #+begin_src emacs-lisp
   (setq c-default-style "linux")
 #+end_src
 *** Go
-**** LSP
 Set up lsp-mode to work with Go.
 
 #+begin_src emacs-lisp
@@ -360,7 +356,6 @@ Use company-mode. (This seems to not be needed.)
   ;;            (company-mode)))
 #+end_src
 *** Python
-**** LSP
 Set up lsp-mode for python
 
 #+begin_src emacs-lisp
@@ -374,7 +369,6 @@ python-language-server, available via pip.
 $ sudo pip install python-language-server
 #+end_example
 *** Bash
-**** LSP
 Set up lsp-mode for bash.
 
 #+begin_src emacs-lisp
