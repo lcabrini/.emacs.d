@@ -293,13 +293,13 @@ just in case I need it.
 Company mode allows for autocompletion.
 
 #+begin_src emacs-lisp
-  (use-package company
-    :ensure t
-    :init
-    (global-company-mode)
-    :config
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 1))
+  ;; (use-package company
+  ;;   :ensure t
+  ;;   :init
+  ;;   (global-company-mode)
+  ;;   :config
+  ;;   (setq company-idle-delay 0)
+  ;;   (setq company-minimum-prefix-length 1))
 #+end_src
 
 Autocompletion is possibly useful at times, but it also gets really annoying.
@@ -307,7 +307,7 @@ I don't want it for Org mode files. (I'm probably goint to disable it for
 other modes as well later.)
 
 #+begin_src emacs-lisp
-  (setq company-global-modes '(not org-mode))
+  ;; (setq company-global-modes '(not org-mode))
 #+end_src
 
 * Windows and Buffers
