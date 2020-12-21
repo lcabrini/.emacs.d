@@ -335,20 +335,20 @@ convinced that I really want to use it. I do like some things about LSP,
 but it also feels very intrusive.
 
 #+begin_src emacs-lisp
-  (use-package lsp-mode
-    :ensure t
-    :commands
-    (lsp lsp-deferred))
+  ;; (use-package lsp-mode
+  ;;   :ensure t
+  ;;   :commands
+  ;;   (lsp lsp-deferred))
 #+end_src
 
 The [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] package adds some UI stuff.
 
 #+begin_src emacs-lisp 
-  (use-package lsp-ui
-    :ensure t
-    :commands lsp-ui-mode)
+  ;; (use-package lsp-ui
+  ;;   :ensure t
+  ;;   :commands lsp-ui-mode)
 
-   (setq lsp-ui-doc-enable nil)
+  ;; (setq lsp-ui-doc-enable nil)
 #+end_src
 
 Here are some useful links related to lsp-mode:
@@ -369,7 +369,7 @@ Magit is amazing!
 Set up lsp-mode for C.
 
 #+begin_src emacs-lisp
-  (add-hook 'c-mode-hook #'lsp-deferred)
+  ;; (add-hook 'c-mode-hook #'lsp-deferred)
 #+end_src
 
 The language server that I'm using for C mode is clangd, which I installed from
@@ -388,7 +388,7 @@ I use the Linux style for formatting C code.
 Set up lsp-mode to work with Go.
 
 #+begin_src emacs-lisp
-  (add-hook 'go-mode-hook #'lsp-deferred)
+  ;; (add-hook 'go-mode-hook #'lsp-deferred)
 #+end_src
 
 In order for lsp-mode to work with Go, [[https://github.com/golang/tools/tree/master/gopls][gopls]] needs to be installed somewhere 
@@ -407,10 +407,10 @@ in $PATH. ([[https://github.com/golang/tools/blob/master/gopls/doc/emacs.md][Ins
 Set up hooks to clean up the code on save.
 
 #+begin_src emacs-lisp
-  (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook #'lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'lsp-organize-imports t t))
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  ;; (defun lsp-go-install-save-hooks ()
+  ;;   (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  ;;   (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  ;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 #+end_src
 
 **** Company
@@ -445,7 +445,7 @@ This packages adds support for Python virtual environents.
 Set up lsp-mode for python.
 
 #+begin_src emacs-lisp
-  (add-hook 'python-mode-hook #'lsp-deferred)
+  ;; (add-hook 'python-mode-hook #'lsp-deferred)
 #+end_src
 
 In order to work, lsp-mode needs a python language server. When using
@@ -462,7 +462,7 @@ Some links to more information.
 Set up lsp-mode for bash.
 
 #+begin_src emacs-lisp
-  (add-hook 'sh-mode-hook #'lsp-deferred)
+  ;; (add-hook 'sh-mode-hook #'lsp-deferred)
 #+end_src
 
 The bash-language-server is available in the Arch repos.
