@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: django-foreign-key
+# key: dfk
+# --
+$1 = models.ForeignKey($2,
+                       on_delete=models.CASCADE,
+                       related_name='$3')

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: django-charfield
+# key: dcf
+# --
+$1 = models.Charfield(max_length=$2)

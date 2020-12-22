@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: bulma-form-field
+# key: bff
+# --
+<div class="field">
+  <label class="label">$1</label>
+  <div class="control">
+    $0
+  </div>
+</div>

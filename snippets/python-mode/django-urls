@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: django-urls
+# key: du
+# --
+from django.urls import path
+from .views import *
+
+app_name='$1'
+urlpatterns = [
+    path('', $2, name='$3'),
+]

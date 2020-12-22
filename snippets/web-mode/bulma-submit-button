@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: bulma-submit-button
+# key: bsb
+# --
+<div class="field">
+  <p class="control has-text-right">
+    <button class="button is-success" type="submit">$1</button>
+  </p>
+</div>

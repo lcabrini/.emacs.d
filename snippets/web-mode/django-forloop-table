@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: django-forloop-table
+# key: dft
+# --
+{% for $1 in $2 %}
+  {% if forloop.first %}
+    <table class="table is-striped is-fullwidth">
+      <thead>
+	<tr>
+	  <th></th>
+	</tr>
+      </thead>
+
+      <tbody>
+  {% endif %}
+  <tr>
+    <td></td>
+  </tr>
+  {% if forloop.last %}
+      </tbody>
+    </table>
+  {% endif %}
+{% empty %}
+  <p></p>
+{% endfor %}

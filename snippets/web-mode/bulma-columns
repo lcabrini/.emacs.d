@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: bulma-columns
+# key: bcols
+# --
+<div class="columns">
+  <div class="column">
+    $0
+  </div>
+</div>
