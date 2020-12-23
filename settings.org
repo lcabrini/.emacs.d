@@ -307,7 +307,9 @@ I use the Linux style for formatting C code.
 *** Go
 #+begin_src emacs-lisp
   (use-package go-mode
-    :ensure t)
+    :ensure t
+    :config
+    (add-hook 'before-save-hook 'gofmt-before-save))
 #+end_src
 *** Python
 I use [[https://www.python.org/][Python]] quite a lot.
