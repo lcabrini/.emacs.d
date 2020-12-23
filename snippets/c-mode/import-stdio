@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: import-stdio
+# key: io
+# --
+#import <stdio.h>

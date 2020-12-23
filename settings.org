@@ -104,10 +104,10 @@ This is my favorite theme and the one I use most of the time. ([[https://github.
 This is not a bad theme. ([[https://github.com/bbatsov/zenburn-emacs][GitHub]])
 
 #+begin_src emacs-lisp
-  ;; (use-package zenburn-theme
-  ;;   :ensure t
-  ;;   :init
-  ;;  (load-theme 'zenburn t))
+  (use-package zenburn-theme
+    :ensure t
+    :init
+    (load-theme 'zenburn t))
 #+end_src
 
 I found a few modifications [[https://github.com/bbatsov/zenburn-emacs/issues/350][here]] to make some things a little easier to
@@ -125,12 +125,12 @@ read.
 I just tried this out and kind of like it.
 
 #+begin_src emacs-lisp
-  (use-package doom-themes
-    :config
-    (setq doom-themes-enable-bold t
-          doom-themes-enable-italic t)
-    (load-theme 'doom-one t)
-    (doom-themes-org-config))
+  ;; (use-package doom-themes
+  ;;  :config
+  ;;  (setq doom-themes-enable-bold t
+  ;;        doom-themes-enable-italic t)
+  ;;  (load-theme 'doom-one t)
+  ;;  (doom-themes-org-config))
 #+end_src
 ** Modeline
 I struggled to get the modeline the way I wanted it. The default modeline
@@ -307,7 +307,9 @@ I use the Linux style for formatting C code.
 *** Go
 #+begin_src emacs-lisp
   (use-package go-mode
-    :ensure t)
+    :ensure t
+    :config
+    (add-hook 'before-save-hook 'gofmt-before-save))
 #+end_src
 *** Python
 I use [[https://www.python.org/][Python]] quite a lot.
@@ -327,6 +329,34 @@ This packages adds support for Python virtual environents.
 #+end_src
 *** Bash
 ** Web Development
+** Utilities
+*** Whitespace
+I use [[https://github.com/lewang/ws-butler][ws-butler]] to automatically clean up whitespace on save.
+
+#+begin_src emacs-lisp
+  (use-package ws-butler
+    :init
+    (ws-butler-global-mode t))
+#+end_src
+*** Balancing Delimiters
+[[https://github.com/Fuco1/smartparens][Smartparens]] helps to keep parenthesis balanced.
+
+#+begin_src emacs-lisp
+  (use-package smartparens
+    :config
+    (add-hook 'prog-mode-hook 'smartparens-mode))
+#+end_src
+*** Rainbow Delimiters
+[[https://github.com/Fanael/rainbow-delimiters][Rainbow Delimiters]] highlights delimiters according to their depths. I find
+this quite useful.
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :diminish
+    :demand t
+    :config
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+end_src
 * Living in Emacs
 ** Accounting
 I use [[https://www.ledger-cli.org/][ledger]] to help manage my personal finances. Of course, there is a

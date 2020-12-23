@@ -4,9 +4,9 @@
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-refile-last-stored"
  (filename . "~/org/gtd/someday.org")
- (front-context-string . "** TODO read SIC")
- (rear-context-string . "watching movies\n")
- (position . 761))
+ (front-context-string . "** TODO learn gd")
+ (rear-context-string . "ODO learn cmake\n")
+ (position . 861))
 ("org-capture-last-stored"
  (filename . "~/org/gtd/inbox.org")
  (front-context-string . "** TODO Emacs ke")
