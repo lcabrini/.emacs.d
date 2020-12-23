@@ -9,9 +9,9 @@
  (position . 761))
 ("org-capture-last-stored"
  (filename . "~/org/gtd/inbox.org")
- (front-context-string . "** TODO plan The")
- (rear-context-string . "jango templates\n")
- (position . 144))
+ (front-context-string . "** TODO Emacs ke")
+ (rear-context-string . " TODO learn gdb\n")
+ (position . 63))
 ("index.org"
  (filename . "~/org/index.org")
  (front-context-string . " Emacs Configura")
