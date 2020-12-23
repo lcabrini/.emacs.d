@@ -36,7 +36,7 @@
  '(custom-safe-themes
    '("e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" default))
  '(package-selected-packages
-   '(ws-butler smartparens smart-parens rainbow-delimiters doom-themes org-contacts all-the-icons-dired doom-modeline vterm dashboard ledger-mode treemacs-magit treemacs-icons-dired treemacs-projectile treemacs projectile color-theme-sanityinc-tomorrow zenburn-theme which-key web-mode quelpa-use-package powerline pass org-pdfview org-emms org-drill org-bullets matrix-client magit emms elpy elfeed-org counsel company-jedi ace-window))
+   '(flycheck fly-check ws-butler smartparens smart-parens rainbow-delimiters doom-themes org-contacts all-the-icons-dired doom-modeline vterm dashboard ledger-mode treemacs-magit treemacs-icons-dired treemacs-projectile treemacs projectile color-theme-sanityinc-tomorrow zenburn-theme which-key web-mode quelpa-use-package powerline pass org-pdfview org-emms org-drill org-bullets matrix-client magit emms elpy elfeed-org counsel company-jedi ace-window))
  '(safe-local-variable-values
    '((engine . django)
      (pyenv-activate . "~/src/napkoaco/.venv"))))

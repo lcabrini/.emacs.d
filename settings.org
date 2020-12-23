@@ -297,6 +297,15 @@ Magit is amazing!
 #+end_src
 
 ** Project Management
+** Syntax Checking
+
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init
+    (global-flycheck-mode))
+#+end_src
+
 ** Programming Languages
 *** C
 I use the Linux style for formatting C code.
@@ -326,6 +335,38 @@ This packages adds support for Python virtual environents.
     :ensure t
     :config
     (pyvenv-mode 1))
+#+end_src
+
+I want virtual environments to automatically be activated. I got the
+idea from [[https://github.com/jorgenschaefer/pyvenv/issues/51][here]], although I had to modify to my needs. Once the virtual
+environemtn is active, we make sure flake8 is installed.
+
+#+begin_src emacs-lisp
+  (defun lorenzo/pyvenv-autoload ()
+    (require 'projectile)
+    (let ((venv-path (f-expand ".venv" (projectile-project-root))))
+      (when (f-exists? venv-path)
+        (pyvenv-activate venv-path)))
+    (save-window-excursion
+      (if pyvenv-virtual-env
+          (async-shell-command "pip install flake8")
+        (message "No active virtual environment"))))
+
+  (add-hook 'python-mode-hook 'lorenzo/pyvenv-autoload)
+#+end_src
+
+Since lsp-mode is awful, I use [[https://github.com/jorgenschaefer/elpy][elpy]] instead. It gives me a reasonable
+python development environment.
+
+#+begin_src emacs-lisp
+  (use-package elpy
+    :ensure t
+    :hook
+    ((elpy-mode . flycheck-mode))
+    :init
+    (elpy-enable)
+    :config
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
 #+end_src
 *** Bash
 ** Web Development
@@ -740,9 +781,9 @@ just in case, I'll keep my configuration here.
   ;  :init
   ;  (elpy-enable))
 
-  (when (executable-find "ipython")
-    (setq python-shell-interpreter "ipython"
-          python-shell-interpreter-args "--simple-prompt -i"))
+  ;;(when (executable-find "ipython")
+  ;;  (setq python-shell-interpreter "ipython"
+  ;;        python-shell-interpreter-args "--simple-prompt -i"))
 #+END_SRC
 
 *** TODO automaticall install required packages in virtual environment [0/4]
