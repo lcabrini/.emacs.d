@@ -370,6 +370,37 @@ python development environment.
 #+end_src
 *** Bash
 ** Web Development
+
+I use [[https://web-mode.org/][web-mode]] for web development.
+
+#+begin_src emacs-lisp
+  (use-package web-mode
+    :ensure t
+    :mode (".html?$")
+    :config
+    (setq web-mode-enable-engine-detection t
+          web-mode-markup-indent-offset 2
+          web-mode-css-indent-offset 2
+          web-mode-code-indent-offset 2
+          web-mode-enable-auto-closing t
+          web-mode-enable-auto-opening t
+          web-mode-enable-auto-indentation t))
+#+end_src
+
+If want web-mode to use the Django engine for .html files that are part of
+a Django project. I found this [[https://emacs.stackexchange.com/questions/32585/set-web-mode-engine-per-directory][here]].
+
+#+begin_src emacs-lisp
+  (defun lorenzo/django-engine ()
+    (if (projectile-project-p)
+        (if (file-exists-p (concat (projectile-project-root) "manage.py"))
+            (web-mode-set-engine "django"))))
+
+  (add-hook 'web-mode-hook 'lorenzo/django-engine)
+#+end_src
+
+Web-mode and smartparens both want to auto-insert closing delimiters, so we
+disable smartparens in web-mode.
 ** Utilities
 *** Whitespace
 I use [[https://github.com/lewang/ws-butler][ws-butler]] to automatically clean up whitespace on save.
@@ -384,8 +415,13 @@ I use [[https://github.com/lewang/ws-butler][ws-butler]] to automatically clean 
 
 #+begin_src emacs-lisp
   (use-package smartparens
+    :init
+    (add-hook 'python 'smartparens-mode)
+    (add-hook 'emacs-lisp-mode-hook 'smartparens-mode)
+    (add-hook 'lisp-interaction-mode-hook 'smartparens-mode)
     :config
-    (add-hook 'prog-mode-hook 'smartparens-mode))
+    (sp-local-pair 'emacs-lisp-mode "'" nil :actions nil)
+    (sp-local-pair 'lisp-interaction-mode "'" nil :actions nil))
 #+end_src
 *** Rainbow Delimiters
 [[https://github.com/Fanael/rainbow-delimiters][Rainbow Delimiters]] highlights delimiters according to their depths. I find
@@ -657,15 +693,6 @@ just in case, I'll keep my configuration here.
 (global-set-key [C-mouse-5] 'text-scale-decrease)
 #+END_SRC
 
-** Yasnippet
-#+BEGIN_SRC emacs-lisp
-  ;;(use-package yasnippet
-  ;;  :ensure t
-  ;;  :init
-  ;;  (yas-global-mode 1))
-  ;;(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
-#+END_SRC
-
 ** Projectile
 #+begin_src emacs-lisp
   (use-package projectile
@@ -762,57 +789,6 @@ just in case, I'll keep my configuration here.
     :ensure t)
 #+end_src
 
-** Programming
-*** Python
-#+BEGIN_SRC emacs-lisp
-  
-    ; :hook
-    ; ((python-mode . jedi:setup)))
-
-  
-
-  ; (use-package company-jedi
-  ;  :ensure t
-  ;  :config
-  ;  (add-to-list 'company-backends 'company-jedi))
-
-  ; (use-package elpy
-  ;  :ensure t
-  ;  :init
-  ;  (elpy-enable))
-
-  ;;(when (executable-find "ipython")
-  ;;  (setq python-shell-interpreter "ipython"
-  ;;        python-shell-interpreter-args "--simple-prompt -i"))
-#+END_SRC
-
-*** TODO automaticall install required packages in virtual environment [0/4]
-- [ ] flake8
-- [ ] autopep8
-- [ ] jedi (is this needed?)
-- [ ] yapf
-*** Web-mode
-#+begin_src emacs-lisp
-  (use-package web-mode
-    :ensure t
-    :mode (".html?$")
-    :config
-    (setq
-     web-mode-enable-engine-detection t
-     web-mode-markup-indent-offset 2
-     web-mode-css-indent-offset 2
-     web-mode-code-indent-offset 2
-     web-mode-enable-auto-closing t
-     web-mode-enable-auto-opening t
-     web-mode-enable-auto-indentation t))
-
-  ;; https://emacs.stackexchange.com/questions/32585/set-web-mode-engine-per-directory
-  (defun lorenzo/django-engine ()
-    (if (projectile-project-p)
-        (if (file-exists-p (concat (projectile-project-root) "manage.py"))
-            (web-mode-set-engine "django"))))
-  (add-hook 'web-mode-hook 'lorenzo/django-engine)
-#+end_src
 ** Docker
 #+BEGIN_SRC emacs-lisp
   (use-package dockerfile-mode
@@ -833,10 +809,6 @@ just in case, I'll keep my configuration here.
 
   (use-package org-emms
     :ensure t)
-#+END_SRC
-** Elfeed
-#+BEGIN_SRC emacs-lisp
-  
 #+END_SRC
 ** Matrix-client
 #+begin_src emacs-lisp
