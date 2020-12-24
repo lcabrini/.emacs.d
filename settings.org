@@ -411,7 +411,9 @@ I use [[https://github.com/lewang/ws-butler][ws-butler]] to automatically clean 
     (ws-butler-global-mode t))
 #+end_src
 *** Balancing Delimiters
-[[https://github.com/Fuco1/smartparens][Smartparens]] helps to keep parenthesis balanced.
+[[https://github.com/Fuco1/smartparens][Smartparens]] helps to keep parenthesis balanced. However, this mode does
+more harm than good in some modes, so I'm restrictive about where I
+enable it. Also, some modes require a bit of extra configuration.
 
 #+begin_src emacs-lisp
   (use-package smartparens
