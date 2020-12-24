@@ -297,6 +297,16 @@ Magit is amazing!
 #+end_src
 
 ** Project Management
+
+I use [[https://github.com/bbatsov/projectile][projectile]] for project management.
+
+#+begin_src emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+    (projectile-mode +1))
+#+end_src
 ** Syntax Checking
 
 #+begin_src emacs-lisp
@@ -695,15 +705,6 @@ just in case, I'll keep my configuration here.
 (global-set-key [C-mouse-5] 'text-scale-decrease)
 #+END_SRC
 
-** Projectile
-#+begin_src emacs-lisp
-  (use-package projectile
-    :ensure t
-    :config
-    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-    (projectile-mode +1))
-#+end_src
 ** Treemacs
 #+begin_src emacs-lisp
   ;; copied from treemacs documentation. I should find time and go through this at
