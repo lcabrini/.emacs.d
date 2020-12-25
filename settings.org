@@ -241,6 +241,32 @@ Add time when logging done tasks.
 #+begin_src emacs-lisp
   (setq org-log-done 'time)
 #+end_src
+** Org-superstar
+In the past I have used [[https://github.com/sabof/org-bullets][org-bullets]], but it gave me a few problems that I
+couldn't figure out at the time. Recently, I found  [[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]], which
+I'm giving a try for a while.
+
+#+begin_src emacs-lisp
+  ;; (use-package org-superstar
+  ;;  :ensure t)
+
+  ;; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+#+end_src
+
+** Org-drill
+I don't really use [[https://orgmode.org/worg/org-contrib/org-drill.html][org-drill]] any more, since I've gone back to Anki. But,
+just in case, I'll keep my configuration here.
+
+#+begin_src emacs-lisp
+  ;; (use-package org-drill
+  ;;   :ensure t)
+
+  ;; (setq org-drill-add-random-noise-to-intervals-p t)
+  ;; (setq org-drill-scope 'directory)
+  ;; (setq org-drill-learn-fraction 0.4)
+  ;; (setq org-drill-maximum-items-per-session 50)
+  ;; (setq org-drill-maximum-duration 30)
+#+end_src
 * Terminal Emulation
 ** Vterm
 Since I discovered [[https://github.com/akermu/emacs-libvterm][vterm]] it has become my standard terminal emulator for
@@ -264,6 +290,17 @@ just in case I need it.
   ;; (global-set-key (kbd "<s-return>") 'ansi-term)
 #+end_src
 * Working with Text
+** Auto-completion
+[[https://company-mode.github.io/][Company-mode]] is a text completion framework for Emacs. It can be very
+intrusive, so I'm only going to enable it in specific modes.
+
+#+begin_src emacs-lisp
+  (use-package company
+    :ensure t
+    :config
+    (setq company-idle-delay 0.0
+          company-minimum-prefix-length 2))
+#+end_src
 ** Snippets
 I use [[https://github.com/joaotavora/yasnippet][YASnippet]].
 
@@ -289,7 +326,7 @@ I find [[https://github.com/abo-abo/ace-window][ace-window]] to work well for me
 * Development
 ** Revision Control
 
-Magit is amazing!
+[[https://magit.vc/][Magit]] is amazing!
 
 #+begin_src emacs-lisp
   (use-package magit
@@ -308,6 +345,7 @@ I use [[https://github.com/bbatsov/projectile][projectile]] for project manageme
     (projectile-mode +1))
 #+end_src
 ** Syntax Checking
+I use [[https://www.flycheck.org/en/latest/][Flycheck]].
 
 #+begin_src emacs-lisp
   (use-package flycheck
@@ -316,6 +354,35 @@ I use [[https://github.com/bbatsov/projectile][projectile]] for project manageme
     (global-flycheck-mode))
 #+end_src
 
+** Language Server Protocol
+The [[https://en.wikipedia.org/wiki/Language_Server_Protocol][Language Server Protocol]] allows for communication between a text editor
+and an LSP server, that is a server that provides features for a specific
+programming language. With [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]], Emacs becomes a client to LSP servers.
+
+#+begin_src emacs-lisp
+    (use-package lsp-mode
+      :ensure t
+      :hook
+      (lsp-mode . lsp-enable-which-key-integration)
+      :commands
+      (lsp lsp-deferred))
+#+end_src
+
+The default keymap prefix doesn't work well for me so let's change it.
+
+#+begin_src emacs-lisp
+  (setq lsp-keymap-prefix "C-c l")
+#+end_src
+
+The [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] package adds some UI stuff.
+
+#+begin_src emacs-lisp
+  (use-package lsp-ui)
+#+end_src
+
+Here are some useful links related to lsp-mode:
+- [[https://emacs-lsp.github.io/lsp-mode/page/performance/][Performance]]: from the lsp-mode site
+- [[http://blog.binchen.org/posts/how-to-speed-up-lsp-mode.html][How to speed up lsp-mode]]: blog post by Chen Bin
 ** Programming Languages
 *** C
 I use the Linux style for formatting C code.
@@ -323,6 +390,20 @@ I use the Linux style for formatting C code.
 #+begin_src emacs-lisp
   (setq c-default-style "linux")
 #+end_src
+
+**** LSP
+Set up lsp-mode for C.
+
+#+begin_src emacs-lisp
+  ;; (add-hook 'c-mode-hook #'lsp-deferred)
+#+end_src
+
+The language server that I'm using for C mode is clangd, which I installed
+from the Arch repos.
+
+#+begin_example
+  sudo pacman -Ss clang
+#+end_example
 *** Go
 #+begin_src emacs-lisp
   (use-package go-mode
@@ -338,6 +419,11 @@ I use [[https://www.python.org/][Python]] quite a lot.
     :ensure nil)
 #+end_src
 
+**** Company-mode
+#+begin_src emacs-lisp
+  (add-hook 'python-mode-hook 'company-mode)
+#+end_src
+**** Virtual Environments
 This packages adds support for Python virtual environents.
 
 #+begin_src emacs-lisp
@@ -348,35 +434,73 @@ This packages adds support for Python virtual environents.
 #+end_src
 
 I want virtual environments to automatically be activated. I got the
-idea from [[https://github.com/jorgenschaefer/pyvenv/issues/51][here]], although I had to modify to my needs. Once the virtual
-environemtn is active, we make sure flake8 is installed.
+idea from [[https://github.com/jorgenschaefer/pyvenv/issues/51][here]], although I had to modify to my needs.
 
 #+begin_src emacs-lisp
   (defun lorenzo/pyvenv-autoload ()
     (require 'projectile)
     (let ((venv-path (f-expand ".venv" (projectile-project-root))))
       (when (f-exists? venv-path)
-        (pyvenv-activate venv-path)))
-    (save-window-excursion
-      (if pyvenv-virtual-env
-          (async-shell-command "pip install flake8")
-        (message "No active virtual environment"))))
+        (pyvenv-activate venv-path))))
 
   (add-hook 'python-mode-hook 'lorenzo/pyvenv-autoload)
 #+end_src
 
-Since lsp-mode is awful, I use [[https://github.com/jorgenschaefer/elpy][elpy]] instead. It gives me a reasonable
-python development environment.
+**** LSP
+Activate lsp-mode for Python.
 
 #+begin_src emacs-lisp
-  (use-package elpy
-    :ensure t
-    :hook
-    ((elpy-mode . flycheck-mode))
-    :init
-    (elpy-enable)
-    :config
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
+  (add-hook 'python-mode-hook #'lsp)
+#+end_src
+
+In order to work, lsp-mode needs a python language server. When using
+virtual environments, the python language server needs to be installed
+in the virtual environment itself.
+
+#+begin_src emacs-lisp
+  (defun lorenzo/install-python-language-server ()
+    (require 'pyvenv)
+    (save-window-excursion
+      (if pyvenv-virtual-env
+          (async-shell-command "pip install python-language-server")
+        (message "No active virtual environment"))))
+
+  (add-hook 'python-mode-hook 'lorenzo/install-python-language-server)
+#+end_src
+
+Some links to more information.
+- [[https://vxlabs.com/2018/06/08/python-language-server-with-emacs-and-lsp-mode/][Configuring Emacs, lsp-mode and the python langauge server]]
+
+**** Elpy
+An alternative to lsp-mode for python is [[https://github.com/jorgenschaefer/elpy][elpy]].
+
+#+begin_src emacs-lisp
+  ;; (use-package elpy
+  ;;   :ensure t
+  ;;   :hook
+  ;;   ((elpy-mode . flycheck-mode))
+  ;;   :init
+  ;;   (elpy-enable)
+  ;;   :config
+  ;;  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
+#+end_src
+
+**** Anaconda
+
+#+begin_src emacs-lisp
+  ;;(use-package anaconda-mode
+  ;;  :init
+  ;;  (add-hook 'python-mode-hook 'anaconda-mode)
+  ;;  (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+#+end_src
+
+#+begin_src emacs-lisp
+  ;;  (use-package company-anaconda
+  ;;    :ensure t
+  ;;    :after
+  ;;    (company)
+  ;;    :config
+  ;;    (add-to-list 'company-backends 'company-anaconda))
 #+end_src
 *** Bash
 ** Web Development
@@ -458,6 +582,12 @@ I use [[https://www.ledger-cli.org/][ledger]] to help manage my personal finance
     (setq ledger-clear-whole-transactions 1)
     :mode "\\.ledger\\'")
 #+end_src
+
+Enable company-mode in ledger-mode.
+
+#+begin_src emacs-lisp
+  (add-hook 'ledger-mode-hook 'company-mode)
+#+end_src
 ** Feeds
 I use [[https://github.com/skeeto/elfeed][elfeed]] to subscribe to RSS feeds and podcasts.
 
@@ -516,56 +646,7 @@ Use company-mode. (This seems to not be needed.)
   ;;            (set (make-local-variable 'company-backends) '(company-go))
   ;;            (company-mode)))
 #+end_src
-** Language Server Protocol
-I had heard some good things about lsp-mode, so I decided to give it a go.
-Big mistake. It slows Emacs down. Moreover, turns the editor into a 
-Christmas tree, full of blinking elements that pop up everywhere. It is
-completely impossible to focus on programming because there is so much going
-on at the same time.
 
-The [[https://en.wikipedia.org/wiki/Language_Server_Protocol][Language Server Protocol]] allows for communication between a text editor
-and an LSP server, that is a server that provides features for a specific
-programming language. With [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]], Emacs becomes a client to LSP servers.
- 
-I'm currently experimenting with LSP and have only enabled it for a few 
-languages. There is still a lot of configuration to do and I'm still not
-convinced that I really want to use it. I do like some things about LSP, 
-but it also feels very intrusive.
-
-#+begin_src emacs-lisp
-  ;; (use-package lsp-mode
-  ;;   :ensure t
-  ;;   :commands
-  ;;   (lsp lsp-deferred))
-#+end_src
-
-The [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] package adds some UI stuff.
-
-#+begin_src emacs-lisp 
-  ;; (use-package lsp-ui
-  ;;   :ensure t
-  ;;   :commands lsp-ui-mode)
-
-  ;; (setq lsp-ui-doc-enable nil)
-#+end_src
-
-Here are some useful links related to lsp-mode:
-- [[https://emacs-lsp.github.io/lsp-mode/page/performance/][Performance]]: from the lsp-mode site
-- [[http://blog.binchen.org/posts/how-to-speed-up-lsp-mode.html][How to speed up lsp-mode]]: blog post by Chen Bin
-
-*** LSP-mode for C
-Set up lsp-mode for C.
-
-#+begin_src emacs-lisp
-  ;; (add-hook 'c-mode-hook #'lsp-deferred)
-#+end_src
-
-The language server that I'm using for C mode is clangd, which I installed 
-from the Arch repos.
-
-#+begin_example
-  sudo pacman -Ss clang
-#+end_example
 *** LSP-mode for Go 
 Set up lsp-mode to work with Go.
 
@@ -593,20 +674,7 @@ Set up hooks to clean up the code on save.
 *** LSP-mode for Python
 Set up lsp-mode for python.
 
-#+begin_src emacs-lisp
-  ;; (add-hook 'python-mode-hook #'lsp-deferred)
-#+end_src
 
-In order to work, lsp-mode needs a python language server. When using
-virtual environments, the python language server needs to be installed
-in the virtual environment itself.
-
-#+begin_example
-(.venv) $ pip install python-language-server
-#+end_example
-
-Some links to more information.
-- [[https://vxlabs.com/2018/06/08/python-language-server-with-emacs-and-lsp-mode/][Configuring Emacs, lsp-mode and the python langauge server]]
 *** LSP-mode for bash
 Set up lsp-mode for bash.
 
@@ -622,34 +690,7 @@ The bash-language-server is available in the Arch repos.
 
 The bash language server has been a bit iffy for me. I'm not sure I'm going to
 keep it.
-** Org-superstar
-I disabled this because it seems to slow Emacs down.
 
-In the past I have used [[https://github.com/sabof/org-bullets][org-bullets]], but it gave me a few problems that I
-couldn't figure out at the time. Recently, I found  [[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]], which
-I'm giving a try for a while.
-
-#+begin_src emacs-lisp
-  ;; (use-package org-superstar
-  ;;  :ensure t)
-
-  ;; (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-#+end_src
-
-** Org-drill
-I don't really use [[https://orgmode.org/worg/org-contrib/org-drill.html][org-drill]] any more, since I've gone back to Anki. But,
-just in case, I'll keep my configuration here.
-
-#+begin_src emacs-lisp
-  ;; (use-package org-drill
-  ;;   :ensure t)
-
-  ;; (setq org-drill-add-random-noise-to-intervals-p t)
-  ;; (setq org-drill-scope 'directory)
-  ;; (setq org-drill-learn-fraction 0.4)
-  ;; (setq org-drill-maximum-items-per-session 50)
-  ;; (setq org-drill-maximum-duration 30)
-#+end_src
 
 
 
