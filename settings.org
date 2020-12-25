@@ -310,6 +310,14 @@ I use [[https://github.com/joaotavora/yasnippet][YASnippet]].
      :config
      (yas-global-mode 1))
  #+end_src
+** Whitespace
+I use [[https://github.com/lewang/ws-butler][ws-butler]] to automatically clean up whitespace on save.
+
+#+begin_src emacs-lisp
+  (use-package ws-butler
+    :init
+    (ws-butler-global-mode t))
+#+end_src
 * Windows and Buffers
 I find [[https://github.com/abo-abo/ace-window][ace-window]] to work well for me for quickly switching between windows.
 
@@ -358,6 +366,8 @@ I use [[https://www.flycheck.org/en/latest/][Flycheck]].
 The [[https://en.wikipedia.org/wiki/Language_Server_Protocol][Language Server Protocol]] allows for communication between a text editor
 and an LSP server, that is a server that provides features for a specific
 programming language. With [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]], Emacs becomes a client to LSP servers.
+
+I find lsp-mode to be too intrusive and over-the-top, so I don't use it much.
 
 #+begin_src emacs-lisp
     (use-package lsp-mode
@@ -411,6 +421,41 @@ from the Arch repos.
     :config
     (add-hook 'before-save-hook 'gofmt-before-save))
 #+end_src
+**** Company
+[[https://github.com/emacsmirror/company-go][Company-go]] uses company-mode to provide autocompletion for Go sources.
+
+#+begin_src emacs-lisp
+  ;;(use-package company-go
+  ;;  :ensure t)
+
+  ;;(add-hook 'go-mode-hook
+  ;;          (lambda ()
+  ;;            (set (make-local-variable 'company-backends) '(company-go))
+  ;;            (company-mode)))
+#+end_src
+**** LSP
+Set up lsp-mode to work with Go.
+
+#+begin_src emacs-lisp
+  ;; (add-hook 'go-mode-hook #'lsp-deferred)
+#+end_src
+
+In order for lsp-mode to work with Go, [[https://github.com/golang/tools/tree/master/gopls][gopls]] needs to be installed somewhere
+in $PATH. ([[https://github.com/golang/tools/blob/master/gopls/doc/emacs.md][Instructions]])
+
+#+begin_example
+  $ GO111MODULE=on go get golang.org/x/tools/gopls@latest
+  $ sudo cp ~/go/bin/gopls /usr/local/bin
+#+end_example
+
+Set up hooks to clean up the code on save.
+
+#+begin_src emacs-lisp
+  ;; (defun lsp-go-install-save-hooks ()
+  ;;   (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  ;;   (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  ;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+#+end_src
 *** Python
 I use [[https://www.python.org/][Python]] quite a lot.
 
@@ -419,10 +464,6 @@ I use [[https://www.python.org/][Python]] quite a lot.
     :ensure nil)
 #+end_src
 
-**** Company-mode
-#+begin_src emacs-lisp
-  (add-hook 'python-mode-hook 'company-mode)
-#+end_src
 **** Virtual Environments
 This packages adds support for Python virtual environents.
 
@@ -446,11 +487,15 @@ idea from [[https://github.com/jorgenschaefer/pyvenv/issues/51][here]], although
   (add-hook 'python-mode-hook 'lorenzo/pyvenv-autoload)
 #+end_src
 
+**** Company-mode
+#+begin_src emacs-lisp
+  (add-hook 'python-mode-hook 'company-mode)
+#+end_src
 **** LSP
 Activate lsp-mode for Python.
 
 #+begin_src emacs-lisp
-  (add-hook 'python-mode-hook #'lsp)
+  ;; (add-hook 'python-mode-hook #'lsp)
 #+end_src
 
 In order to work, lsp-mode needs a python language server. When using
@@ -458,14 +503,14 @@ virtual environments, the python language server needs to be installed
 in the virtual environment itself.
 
 #+begin_src emacs-lisp
-  (defun lorenzo/install-python-language-server ()
-    (require 'pyvenv)
-    (save-window-excursion
-      (if pyvenv-virtual-env
-          (async-shell-command "pip install python-language-server")
-        (message "No active virtual environment"))))
+  ;; (defun lorenzo/install-python-language-server ()
+  ;;   (require 'pyvenv)
+  ;;   (save-window-excursion
+  ;;     (if pyvenv-virtual-env
+  ;;         (async-shell-command "pip install python-language-server")
+  ;;       (message "No active virtual environment"))))
 
-  (add-hook 'python-mode-hook 'lorenzo/install-python-language-server)
+  ;; (add-hook 'python-mode-hook 'lorenzo/install-python-language-server)
 #+end_src
 
 Some links to more information.
@@ -488,21 +533,35 @@ An alternative to lsp-mode for python is [[https://github.com/jorgenschaefer/elp
 **** Anaconda
 
 #+begin_src emacs-lisp
-  ;;(use-package anaconda-mode
-  ;;  :init
-  ;;  (add-hook 'python-mode-hook 'anaconda-mode)
-  ;;  (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+  ;; (use-package anaconda-mode
+  ;;   :init
+  ;;   (add-hook 'python-mode-hook 'anaconda-mode)
+  ;;   (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
 #+end_src
 
 #+begin_src emacs-lisp
-  ;;  (use-package company-anaconda
-  ;;    :ensure t
-  ;;    :after
-  ;;    (company)
-  ;;    :config
-  ;;    (add-to-list 'company-backends 'company-anaconda))
+  ;; (use-package company-anaconda
+  ;;   :ensure t
+  ;;   :after
+  ;;   (company)
+  ;;   :config
+  ;;  (add-to-list 'company-backends 'company-anaconda))
 #+end_src
 *** Bash
+**** LSP
+Set up lsp-mode for bash.
+
+#+begin_src emacs-lisp
+  ;; (add-hook 'sh-mode-hook #'lsp-deferred)
+#+end_src
+
+The bash-language-server is available in the Arch repos.
+
+#+begin_example
+  $ sudo pacman -Ss bash-language-server
+#+end_example
+
+The bash language server is behaves very odd, so I don't really use it.
 ** Web Development
 
 I use [[https://web-mode.org/][web-mode]] for web development.
@@ -536,14 +595,6 @@ a Django project. I found this [[https://emacs.stackexchange.com/questions/32585
 Web-mode and smartparens both want to auto-insert closing delimiters, so we
 disable smartparens in web-mode.
 ** Utilities
-*** Whitespace
-I use [[https://github.com/lewang/ws-butler][ws-butler]] to automatically clean up whitespace on save.
-
-#+begin_src emacs-lisp
-  (use-package ws-butler
-    :init
-    (ws-butler-global-mode t))
-#+end_src
 *** Balancing Delimiters
 [[https://github.com/Fuco1/smartparens][Smartparens]] helps to keep parenthesis balanced. However, this mode does
 more harm than good in some modes, so I'm restrictive about where I
@@ -608,89 +659,26 @@ I configure my feeds via [[https://github.com/remyhonig/elfeed-org][elfeed-org]]
 
   (setq rmh-elfeed-org-files (list "~/org/feeds.org"))
 #+end_src
-* Disabled Packages
-This section contains configurations of packages that for one or other
-reason I've decided not to use.
-
-** Company
-Company mode allows for autocompletion. This may be a good thing in theory,
-but reality is that it is extremely intrusive and never lets you write in
-peace.
+** Media Player
+I use [[https://www.gnu.org/software/emms/][EMMS]].
 
 #+begin_src emacs-lisp
-  ;; (use-package company
-  ;;   :ensure t
-  ;;   :init
-  ;;   (global-company-mode)
-  ;;   :config
-  ;;   (setq company-idle-delay 0)
-  ;;   (setq company-minimum-prefix-length 1))
+  (use-package emms
+    :ensure t
+    :config
+    (progn
+      (emms-standard)
+      (emms-default-players)
+      (setq emms-playlist-buffer-name "EMMS"
+            emms-source-file-default-directory "~/musica/")))
 #+end_src
 
-Autocompletion is possibly useful at times, but it also gets really annoying.
-I don't want it for Org mode files. (I'm probably goint to disable it for
-other modes as well later.)
+Org-mode integration with EMMS is done with [[https://github.com/jagrg/org-emms][org-emms]].
 
 #+begin_src emacs-lisp
-  ;; (setq company-global-modes '(not org-mode))
+  (use-package org-emms
+    :ensure t)
 #+end_src
-*** Company-mode for Go
-Use company-mode. (This seems to not be needed.)
-
-#+begin_src emacs-lisp
-  ;;(use-package company-go
-  ;;  :ensure t)
-
-  ;;(add-hook 'go-mode-hook
-  ;;          (lambda ()
-  ;;            (set (make-local-variable 'company-backends) '(company-go))
-  ;;            (company-mode)))
-#+end_src
-
-*** LSP-mode for Go 
-Set up lsp-mode to work with Go.
-
-#+begin_src emacs-lisp
-  ;; (add-hook 'go-mode-hook #'lsp-deferred)
-#+end_src
-
-In order for lsp-mode to work with Go, [[https://github.com/golang/tools/tree/master/gopls][gopls]] needs to be installed somewhere 
-in $PATH. ([[https://github.com/golang/tools/blob/master/gopls/doc/emacs.md][Instructions]])
-
-#+begin_example
-  $ GO111MODULE=on go get golang.org/x/tools/gopls@latest
-  $ sudo cp ~/go/bin/gopls /usr/local/bin
-#+end_example
-
-Set up hooks to clean up the code on save.
-
-#+begin_src emacs-lisp
-  ;; (defun lsp-go-install-save-hooks ()
-  ;;   (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  ;;   (add-hook 'before-save-hook #'lsp-organize-imports t t))
-  ;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
-#+end_src
-
-*** LSP-mode for Python
-Set up lsp-mode for python.
-
-
-*** LSP-mode for bash
-Set up lsp-mode for bash.
-
-#+begin_src emacs-lisp
-  ;; (add-hook 'sh-mode-hook #'lsp-deferred)
-#+end_src
-
-The bash-language-server is available in the Arch repos.
-
-#+begin_example
-  $ sudo pacman -Ss bash-language-server
-#+end_example
-
-The bash language server has been a bit iffy for me. I'm not sure I'm going to
-keep it.
-
 
 
 
@@ -839,20 +827,6 @@ keep it.
     :ensure t
     :init
     (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
-#+END_SRC 
-** EMMS
-#+BEGIN_SRC emacs-lisp
-  (use-package emms
-    :ensure t
-    :config
-    (progn
-      (emms-standard)
-      (emms-default-players)
-      (setq emms-playlist-buffer-name "EMMS")
-      (setq emms-source-file-default-directory "~/musica/")))
-
-  (use-package org-emms
-    :ensure t)
 #+END_SRC
 ** Matrix-client
 #+begin_src emacs-lisp
