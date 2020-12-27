@@ -603,7 +603,7 @@ enable it. Also, some modes require a bit of extra configuration.
 #+begin_src emacs-lisp
   (use-package smartparens
     :init
-    (add-hook 'python 'smartparens-mode)
+    (add-hook 'python-mode-hook 'smartparens-mode)
     (add-hook 'emacs-lisp-mode-hook 'smartparens-mode)
     (add-hook 'lisp-interaction-mode-hook 'smartparens-mode)
     :config
