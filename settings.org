@@ -227,12 +227,19 @@ someday/maybe list.
                              ("~/org/gtd/someday.org" :level . 1)))
 #+end_src
 
+** Habits
+
+#+begin_src emacs-lisp
+  (add-to-list 'org-modules 'org-habit t)
+#+end_src
+
 ** Agenda
 The agenda should remind me of things in the inbox and the projects file.
 
 #+begin_src emacs-lisp
-  (setq org-agenda-files '("~/org/gtd/inbox.org"
-                           "~/org/gtd/projects.org"))
+    (setq org-agenda-files '("~/org/gtd/inbox.org"
+                             "~/org/gtd/projects.org"
+                             "~/org/gtd/habits.org"))
 #+end_src
 
 ** Log

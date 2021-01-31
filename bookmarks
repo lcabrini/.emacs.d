@@ -3,15 +3,15 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-refile-last-stored"
- (filename . "~/org/gtd/someday.org")
- (front-context-string . "** TODO learn gd")
- (rear-context-string . "ODO learn cmake\n")
- (position . 861))
+ (filename . "~/org/gtd/projects.org")
+ (front-context-string . "** TODO research")
+ (rear-context-string . "2021-01-25 lun>\n")
+ (position . 418))
 ("org-capture-last-stored"
  (filename . "~/org/gtd/inbox.org")
- (front-context-string . "** TODO Emacs ke")
- (rear-context-string . " TODO learn gdb\n")
- (position . 63))
+ (front-context-string . "** TODO research")
+ (rear-context-string . " Inbox\n\n* Tasks\n")
+ (position . 25))
 ("index.org"
  (filename . "~/org/index.org")
  (front-context-string . " Emacs Configura")
