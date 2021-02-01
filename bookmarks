@@ -4,9 +4,9 @@
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-refile-last-stored"
  (filename . "~/org/gtd/projects.org")
- (front-context-string . "** TODO research")
- (rear-context-string . "2021-01-25 lun>\n")
- (position . 418))
+ (front-context-string . "** TODO Write sc")
+ (rear-context-string . "* Makehome [/]\n\n")
+ (position . 384))
 ("org-capture-last-stored"
  (filename . "~/org/gtd/inbox.org")
  (front-context-string . "** TODO research")
