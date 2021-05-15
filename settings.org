@@ -175,7 +175,8 @@ I use Org mode for almost everything. Here are a few basic settings, that need
 to be reviewed and possibly moved elsewehere.
 
 #+begin_src emacs-lisp
-  (setq org-startup-indented t) 
+  (setq org-startup-indented t)
+  (setq org-startup-folded t)
   (setq org-hide-emphasis-markers t)
   (setq org-hide-leading-stars t)
 #+end_src
@@ -239,8 +240,7 @@ The agenda should remind me of things in the inbox and the projects file.
 
 #+begin_src emacs-lisp
     (setq org-agenda-files '("~/org/gtd/inbox.org"
-                             "~/org/gtd/projects.org"
-                             "~/org/gtd/habits.org"))
+                             "~/org/gtd/projects.org"))
 #+end_src
 
 ** Log
