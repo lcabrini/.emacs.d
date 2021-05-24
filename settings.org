@@ -181,6 +181,12 @@ to be reviewed and possibly moved elsewehere.
   (setq org-hide-leading-stars t)
 #+end_src
 
+Increase the scale of LaTex previews.
+
+#+begin_src emacs-lisp
+  (setq org-format-latex-options
+        (plist-put org-format-latex-options :scale 1.2))
+#+end_src
 ** Todo
 I used to have a =STARTED= keyword in the list, but I never really used it. I
 think the current list is fine, although I'm considering adding =NEXT= to it.
@@ -577,6 +583,20 @@ The bash-language-server is available in the Arch repos.
 #+end_example
 
 The bash language server is behaves very odd, so I don't really use it.
+*** Rust
+
+Support for Rust.
+
+#+begin_src emacs-lisp
+  (use-package rust-mode)
+#+end_src
+
+Also, add minor mode for Cargo.
+
+#+begin_src emacs-lisp
+  (use-package cargo)
+  (add-hook 'rust-mode-hook 'cargo-minor-mode)
+#+end_src
 ** Web Development
 
 I use [[https://web-mode.org/][web-mode]] for web development.
