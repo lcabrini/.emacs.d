@@ -204,7 +204,7 @@ I have a template that allows me to quickly capture tasks to my GTD inbox.
 
 #+begin_src emacs-lisp
   (setq org-capture-templates '(("t" "Todo [inbox]" entry
-                                 (file+headline "~/org/gtd/inbox.org" "Tasks")
+                                 (file+headline "~/org/gtd/inbox.org" "Inbox")
                                  "* TODO %i%?")))
 #+end_src
 
