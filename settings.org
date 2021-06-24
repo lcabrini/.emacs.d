@@ -294,9 +294,20 @@ Since I discovered [[https://github.com/akermu/emacs-libvterm][vterm]] it has be
 Emacs.
 
 #+begin_src emacs-lisp
+  ;(defun lorenzo/new-vterm-instance ()
+  ;  (interactive)
+  ;  (vterm t))
+#+end_src
+
+#+begin_src emacs-lisp
   (use-package vterm
-    :ensure t)
-  (global-set-key (kbd "<s-return>") 'vterm)
+    :ensure t
+    :config
+    (defun lorenzo/vterm ()
+      (interactive)
+      (vterm t))
+    :bind ("<s-return>" . lorenzo/vterm))
+  ;(global-set-key (kbd "<s-return>") 'lorenzo/new-vterm-instance)
 #+end_src
 
 ** Ansi term
@@ -629,6 +640,13 @@ a Django project. I found this [[https://emacs.stackexchange.com/questions/32585
 
 Web-mode and smartparens both want to auto-insert closing delimiters, so we
 disable smartparens in web-mode.
+** REST client
+
+It's nice to have a REST client in Emacs itself.
+
+#+begin_src emacs-lisp
+  (use-package restclient)
+#+end_src
 ** Utilities
 *** Balancing Delimiters
 [[https://github.com/Fuco1/smartparens][Smartparens]] helps to keep parenthesis balanced. However, this mode does
