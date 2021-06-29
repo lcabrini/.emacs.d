@@ -104,10 +104,10 @@ This is my favorite theme and the one I use most of the time. ([[https://github.
 This is not a bad theme. ([[https://github.com/bbatsov/zenburn-emacs][GitHub]])
 
 #+begin_src emacs-lisp
-  (use-package zenburn-theme
-    :ensure t
-    :init
-    (load-theme 'zenburn t))
+  ;; (use-package zenburn-theme
+  ;;   :ensure t
+  ;;   :init
+  ;;   (load-theme 'zenburn t))
 #+end_src
 
 I found a few modifications [[https://github.com/bbatsov/zenburn-emacs/issues/350][here]] to make some things a little easier to
@@ -118,6 +118,24 @@ read.
         '(("zenburn-red" . "#de7a78")
           ("zenburn-bg-05" . "#292928")
           ("zenburn-bg" . "#3b3837")))
+
+#+end_src
+*** Dracula
+
+The Dracula theme is becoming my new favorite.
+
+#+begin_src emacs-lisp
+  (use-package dracula-theme
+    :ensure t
+    :init
+    (setq dracula-enlarge-headings nil)
+    :config
+    (load-theme 'dracula t))
+#+end_src
+
+I don't like the large headings.
+
+#+begin_src emacs-lisp
 
 #+end_src
 *** Doom Themes
