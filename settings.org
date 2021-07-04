@@ -328,6 +328,12 @@ Emacs.
   ;(global-set-key (kbd "<s-return>") 'lorenzo/new-vterm-instance)
 #+end_src
 
+I don't want to highlight the current line in a terminal.
+
+#+begin_src emacs-lisp
+  (add-hook 'vterm-mode-hook(lambda ()
+                              (setq-local global-hl-line-mode nil)))
+#+end_src
 ** Ansi term
 Before vterm, I mostly used ansi-term. I'm keeping the configuration here
 just in case I need it.
@@ -367,6 +373,14 @@ I use [[https://github.com/lewang/ws-butler][ws-butler]] to automatically clean 
   (use-package ws-butler
     :init
     (ws-butler-global-mode t))
+#+end_src
+** Bi-directional text
+In Elfeed I have feeds with titles in both LTR and RTL languages. This causes
+the whole buffer to be rendered RTL, which makes it difficult to use. So the
+line below changes that.
+
+#+begin_src emacs-lisp
+  (setq-default bidi-paragraph-direction 'left-to-right)
 #+end_src
 * Windows and Buffers
 I find [[https://github.com/abo-abo/ace-window][ace-window]] to work well for me for quickly switching between windows.

@@ -4,14 +4,14 @@
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-refile-last-stored"
  (filename . "~/org/gtd/projects.org")
- (front-context-string . "** Dell Inspiron")
- (rear-context-string . "2021-06-28 Mon>\n")
- (position . 112595))
+ (front-context-string . "** TODO prepare ")
+ (rear-context-string . "desktop sharing\n")
+ (position . 6002))
 ("org-capture-last-stored"
  (filename . "~/org/gtd/inbox.org")
- (front-context-string . "** TODO watch [[")
- (rear-context-string . "reeCodeCamp.org\n")
- (position . 285))
+ (front-context-string . "** TODO read up ")
+ (rear-context-string . "Website project\n")
+ (position . 134))
 ("index.org"
  (filename . "~/org/index.org")
  (front-context-string . " Emacs Configura")
