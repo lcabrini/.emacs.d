@@ -382,6 +382,12 @@ line below changes that.
 #+begin_src emacs-lisp
   (setq-default bidi-paragraph-direction 'left-to-right)
 #+end_src
+** YAML
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+    :config
+    (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode)))
+#+end_src
 * Windows and Buffers
 I find [[https://github.com/abo-abo/ace-window][ace-window]] to work well for me for quickly switching between windows.
 
